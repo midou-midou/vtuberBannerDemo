@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="React速记，分为3个部分。每一个部分由简短且精悍的知识点组成。开发忘记可查看，初见学习可常翻  基础一、JSX1const element &#x3D; &lt;h1&gt;Hello, world!&lt;&#x2F;h1&gt;;  JavaScript和UI代码的结合 1const element &#x3D; &lt;h1&gt;Hello, &amp;#123;name&amp;#125;&lt;&#x2F;h1&gt;;  用&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React速查">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/index.html">
+<meta property="og:site_name" content="集合">
+<meta property="og:description" content="React速记，分为3个部分。每一个部分由简短且精悍的知识点组成。开发忘记可查看，初见学习可常翻  基础一、JSX1const element &#x3D; &lt;h1&gt;Hello, world!&lt;&#x2F;h1&gt;;  JavaScript和UI代码的结合 1const element &#x3D; &lt;h1&gt;Hello, &amp;#123;name&amp;#125;&lt;&#x2F;h1&gt;;  用&amp;#12">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static.xiaoblogs.cn/emoji/20210906104825.png">
+<meta property="og:image" content="https://static.xiaoblogs.cn/emoji/20210906112449.png">
+<meta property="og:image" content="https://static.xiaoblogs.cn/img/20210906112953.png">
+<meta property="article:published_time" content="2021-09-04T11:21:44.000Z">
+<meta property="article:modified_time" content="2021-09-17T01:38:36.000Z">
+<meta property="article:author" content="[object Object]">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.xiaoblogs.cn/emoji/20210906104825.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.ico" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+        
+      
+    
+    <!-- title -->
+    <title>React速查</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+    <!-- 百度统计 -->
+    
+      <script src="https://hm.baidu.com/hm.js?1baad79f3aa5081fc9ff11dc24c8a93a"></script>
+    
+    <!-- mathjax -->
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/css/vBanner.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="集合" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/09/08/vTuber-demo/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/08/31/happyBirthdayMiku/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&text=React速查"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&is_video=false&description=React速查"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=React速查&body=Check out this article: https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&name=React速查&description=&lt;blockquote&gt;
+&lt;p&gt;React速记，分为3个部分。每一个部分由简短且精悍的知识点组成。开发忘记可查看，初见学习可常翻&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;基础&#34;&gt;&lt;a href=&#34;#基础&#34; class=&#34;headerlink&#34; title=&#34;基础&#34;&gt;&lt;/a&gt;基础&lt;/h2&gt;&lt;h3 id=&#34;一、JSX&#34;&gt;&lt;a href=&#34;#一、JSX&#34; class=&#34;headerlink&#34; title=&#34;一、JSX&#34;&gt;&lt;/a&gt;一、JSX&lt;/h3&gt;&lt;figure class=&#34;highlight jsx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; element = &lt;span class=&#34;language-xml&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;Hello, world!&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;JavaScript和UI代码的结合&lt;/p&gt;
+&lt;figure class=&#34;highlight jsx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; element = &lt;span class=&#34;language-xml&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;Hello, &amp;#123;name&amp;#125;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;用&lt;code&gt;&amp;#123;&amp;#125;&lt;/code&gt;包裹表达式（js表达式，变量）&lt;/p&gt;
+&lt;figure class=&#34;highlight jsx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; element = &lt;span class=&#34;language-xml&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;img&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;className&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;#123;imgClass&amp;#125;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;src&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;#123;user.avatarUrl&amp;#125;&lt;/span&gt; /&amp;gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;class&lt;/code&gt;属性写为&lt;code&gt;className&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;属性用小驼峰语法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight jsx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; element = &lt;span class=&#34;language-xml&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;Hello, world!&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;title class_&#34;&gt;ReactDOM&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;render&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  element,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;variable language_&#34;&gt;document&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;getElementById&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&amp;#x27;root&amp;#x27;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;一个可运行的React Hello World例子&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&t=React速查"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81JSX"><span class="toc-number">1.1.</span> <span class="toc-text">一、JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BB%84%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">二、组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%84%E4%BB%B6%E4%B8%8A%E7%9A%84props%E5%92%8Cstate"><span class="toc-number">1.3.</span> <span class="toc-text">三、组件上的props和state</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#props"><span class="toc-number">1.3.1.</span> <span class="toc-text">props</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#state"><span class="toc-number">1.3.2.</span> <span class="toc-text">state</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">四、事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%99%9A%E6%8B%9FDOM%E3%80%81%E7%9C%9F%E5%AE%9EDOM"><span class="toc-number">1.5.</span> <span class="toc-text">五、虚拟DOM、真实DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9FDOM"><span class="toc-number">1.5.1.</span> <span class="toc-text">虚拟DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9EDOM"><span class="toc-number">1.5.2.</span> <span class="toc-text">真实DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E8%80%85%E5%85%B3%E7%B3%BB"><span class="toc-number">1.5.3.</span> <span class="toc-text">两者关系</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81Diff%E7%AE%97%E6%B3%95"><span class="toc-number">1.6.</span> <span class="toc-text">六、Diff算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="toc-number">1.7.</span> <span class="toc-text">七、生命周期函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6"><span class="toc-number">2.</span> <span class="toc-text">进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%AE%98%E6%96%B9%E8%84%9A%E6%89%8B%E6%9E%B6"><span class="toc-number">2.1.</span> <span class="toc-text">八、官方脚手架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="toc-number">2.2.</span> <span class="toc-text">九、网络请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#axios"><span class="toc-number">2.2.1.</span> <span class="toc-text">axios</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fetch"><span class="toc-number">2.2.2.</span> <span class="toc-text">fetch</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E3%80%81ref"><span class="toc-number">2.3.</span> <span class="toc-text">十、ref</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81react%E4%B8%ADstate%E7%9A%84%E7%AE%A1%E7%90%86"><span class="toc-number">2.4.</span> <span class="toc-text">十一、react中state的管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#redux"><span class="toc-number">2.4.1.</span> <span class="toc-text">redux</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%93%E5%B1%95"><span class="toc-number">3.</span> <span class="toc-text">拓展</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    
+    <div id="vBanner_Root">
+        <div id="vBanner_Container" style="background-image: linear-gradient(to bottom right, white , #FDC888)">
+            <a target="_blank" rel="noopener" href="https://www.pixiv.net/artworks/88263776">
+                
+                    <div id="vBanner_post" title="艾露露Ailurus" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/88263776_p01.png)"></div>
+                
+            </a>
+            <div id="vLogo_Container">
+                 
+                            
+                        <div id="vBanner_logo" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/%E8%89%BE%E9%9C%B2%E9%9C%B2%EF%BC%88logo%EF%BC%89.png)"></div>
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        React速查
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">[object Object]</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-09-04T11:21:44.000Z" itemprop="datePublished">2021-09-04</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>React速记，分为3个部分。每一个部分由简短且精悍的知识点组成。开发忘记可查看，初见学习可常翻</p>
+</blockquote>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="一、JSX"><a href="#一、JSX" class="headerlink" title="一、JSX"></a>一、JSX</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript和UI代码的结合</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>用<code>&#123;&#125;</code>包裹表达式（js表达式，变量）</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">className</span>=<span class="string">&#123;imgClass&#125;</span> <span class="attr">src</span>=<span class="string">&#123;user.avatarUrl&#125;</span> /&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>class</code>属性写为<code>className</code></li>
+<li>属性用小驼峰语法</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> element = <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line"><span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(</span><br><span class="line">  element,</span><br><span class="line">  <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>一个可运行的React Hello World例子</p>
+<span id="more"></span>
+
+<h3 id="二、组件"><a href="#二、组件" class="headerlink" title="二、组件"></a>二、组件</h3><ol>
+<li>类式组件</li>
+<li>函数式组件</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>我是用函数定义的组件(适用于【简单组件】的定义)<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> defualt <span class="keyword">class</span> <span class="title class_">MyComponent</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>我是用类定义的组件(适用于【复杂组件】的定义)<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>插入组件使用<code>import</code>，使用组件用 <strong>开头大写</strong> 的标签，组件可嵌套</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Hello</span> <span class="keyword">from</span> <span class="string">&#x27;./components/Hello&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">MyComponent</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Hello</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>渲染组件，ReactDOM的使用</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(</span><br><span class="line">  <span class="title class_">MyComponent</span>,</span><br><span class="line">  <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、组件上的props和state"><a href="#三、组件上的props和state" class="headerlink" title="三、组件上的props和state"></a>三、组件上的props和state</h3><p>组件接收的入参为<code>props</code>，组件自身的状态为<code>state</code></p>
+<h4 id="props"><a href="#props" class="headerlink" title="props"></a>props</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Welcome</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传值</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> el = <span class="language-xml"><span class="tag">&lt;<span class="name">Welcome</span> <span class="attr">name</span>=<span class="string">&quot;嘉然&quot;</span> /&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>传入值的类型检查，<code>PropTypes</code>的使用</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="title class_">PropTypes</span>.<span class="property">string</span>.<span class="property">isRequired</span>, <span class="comment">//限制name必传，且为字符串</span></span><br><span class="line">  <span class="attr">sex</span>:<span class="title class_">PropTypes</span>.<span class="property">string</span>,<span class="comment">//限制sex为字符串</span></span><br><span class="line">  <span class="attr">age</span>:<span class="title class_">PropTypes</span>.<span class="property">number</span>,<span class="comment">//限制age为数值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认值，<code>defaulyProps</code>的使用</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> defaultProps = &#123;</span><br><span class="line">	<span class="attr">sex</span>: <span class="string">&quot;male&quot;</span>,</span><br><span class="line">	<span class="attr">age</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>props</code>不可修改</p>
+<h4 id="state"><a href="#state" class="headerlink" title="state"></a>state</h4><p><strong>函数式组件需借助<a href="%22https://mimonarchrd.gitee.io/React%E9%80%9F%E6%9F%A5/#Hooks%22">Hooks</a>使用state</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Weather</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span>&#123;</span><br><span class="line">			</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">props</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(props)</span><br><span class="line">    <span class="comment">//初始化状态</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">state</span> = &#123;<span class="attr">isHot</span>:<span class="literal">false</span>,<span class="attr">wind</span>:<span class="string">&#x27;微风&#x27;</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不可以直接修改state，使用<code>setState()</code>修改</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;<span class="attr">isHot</span>:!isHot&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、事件处理"><a href="#四、事件处理" class="headerlink" title="四、事件处理"></a>四、事件处理</h3><ol>
+<li>事件处理回调</li>
+<li><a href="">Ref</a></li>
+</ol>
+<p>类式组件里，在回调函数中要注意this指向的问题</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Toggle</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">props</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(props);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">state</span> = &#123;<span class="attr">isToggleOn</span>: <span class="literal">true</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 为了在回调中使用 `this`，这个绑定是必不可少的</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">handleClick</span> = <span class="variable language_">this</span>.<span class="property">handleClick</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setState</span>(<span class="function"><span class="params">state</span> =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">isToggleOn</span>: !state.<span class="property">isToggleOn</span></span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;this.state.isToggleOn ? &#x27;ON&#x27; : &#x27;OFF&#x27;&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数式组件</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ActionLink</span>(<span class="params"></span>) &#123;</span><br><span class="line">  handleClick = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;The link was clicked.&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、虚拟DOM、真实DOM"><a href="#五、虚拟DOM、真实DOM" class="headerlink" title="五、虚拟DOM、真实DOM"></a>五、虚拟DOM、真实DOM</h3><h4 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h4><p>开销极小的普通对象</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Velement</span> = <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Hello, world<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="真实DOM"><a href="#真实DOM" class="headerlink" title="真实DOM"></a>真实DOM</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Relement</span> = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;root&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="两者关系"><a href="#两者关系" class="headerlink" title="两者关系"></a>两者关系</h4><ul>
+<li>调用<code>ReactDOM.render</code>将虚拟DOM渲染成真实DOM，组件state改变时，React会创建新VDOM并生成RDOM</li>
+<li>虚拟DOM没有真实DOM过多的属性</li>
+</ul>
+<h3 id="六、Diff算法"><a href="#六、Diff算法" class="headerlink" title="六、Diff算法"></a>六、Diff算法</h3><p>对象差异比对调和（Reconciliation）算法</p>
+<ul>
+<li><p>虚拟DOM的比对</p>
+</li>
+<li><p>三种比对策略</p>
+<ol>
+<li>Tree Diff</li>
+<li>Component Diff</li>
+<li>Element Diff</li>
+</ol>
+<p>Tree Diff：DOM树的同层比对，跨层时，直接创建新节点及节点下的树</p>
+<p><img src="https://static.xiaoblogs.cn/emoji/20210906104825.png"></p>
+<p>Component Diff：</p>
+<ul>
+<li><p>不同类型组件：使用Tree Diff</p>
+</li>
+<li><p>同类型组件，比对 <strong>属性</strong> - <strong>子节点</strong> 子节点如根节点比对形式 <strong>属性</strong> - <strong>子节点</strong> 比对。碰到不同类型节点便使用Tree Diff规则。也可以使用 <strong>生命周期函数</strong> 来手动控制组件更新</p>
+<p>不同类型组件</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">Counter</span> /&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">Counter</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>同类型组件</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&quot;before&quot;</span> title=<span class="string">&quot;stuff&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;after&quot;</span> <span class="attr">title</span>=<span class="string">&quot;stuff&quot;</span> /&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>second<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>second<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>third<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>Element Diff</p>
+<p>节点在同一层级，会使用 <strong>删除、插入、移动</strong> 来更新</p>
+<p>插入</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>second<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>每个节点带有key，避免 <strong>一些破坏渲染顺序的操作引发的性能问题</strong> </p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  &#123;/* React不会做移动操作更新ul下面的两个li，而是直接删除原来ul的li，生成新的两个li */&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>second<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>根据key判断原节点是否在原VDOM中存在</p>
+</li>
+</ul>
+<h3 id="七、生命周期函数"><a href="#七、生命周期函数" class="headerlink" title="七、生命周期函数"></a>七、生命周期函数</h3><p>生命周期钩子，特定时刻执行</p>
+<ul>
+<li><strong>React16.4 旧生命周期</strong></li>
+</ul>
+<p><img src="https://static.xiaoblogs.cn/emoji/20210906112449.png"></p>
+<p>初始化阶段: 由<code>ReactDOM.render()</code>触发—初次渲染</p>
+<ol>
+<li><code>constructor()</code></li>
+<li><code>componentWillMount()</code></li>
+<li><code>render()</code></li>
+<li><code>componentDidMount()</code></li>
+</ol>
+<p>更新阶段: 由组件内部<code>this.setSate()</code>或父组件<code>render</code>触发</p>
+<ol>
+<li>   <code>shouldComponentUpdate()</code></li>
+<li>   <code>componentWillUpdate()</code></li>
+<li>   <code>render()</code></li>
+<li>   <code>componentDidUpdate()</code></li>
+</ol>
+<p> 卸载组件: 由<code>ReactDOM.unmountComponentAtNode()</code>触发</p>
+<p>​    <code>componentWillUnmount()</code></p>
+<ul>
+<li><strong>新生命周期</strong></li>
+</ul>
+<p><img src="https://static.xiaoblogs.cn/img/20210906112953.png"></p>
+<ol>
+<li><p>初始化阶段: 由<code>ReactDOM.render()</code>触发—初次渲染</p>
+<ol>
+<li> <code>constructor()</code></li>
+<li><code>getDerivedStateFromProps()</code></li>
+<li><code>render()</code></li>
+<li><code>componentDidMount()</code></li>
+</ol>
+</li>
+<li><p>更新阶段: 由组件内部<code>this.setSate()</code>或父组件重新<code>render</code>触发</p>
+<ol>
+<li><code>getDerivedStateFromProps()</code></li>
+<li><code>shouldComponentUpdate()</code></li>
+<li><code>render()</code></li>
+<li><code>getSnapshotBeforeUpdate()</code></li>
+<li><code>componentDidUpdate()</code></li>
+</ol>
+</li>
+<li><p>卸载组件: 由<code>ReactDOM.unmountComponentAtNode()</code>触发</p>
+<p>   <code>componentWillUnmount()</code></p>
+</li>
+</ol>
+<p>PS.<strong>手动控制组件更新</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">shouldComponentUpdate</span>(<span class="params"></span>)&#123;</span><br><span class="line">	<span class="comment">//do something</span></span><br><span class="line">	reture <span class="literal">true</span> <span class="comment">// 或者填写false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><h3 id="八、官方脚手架"><a href="#八、官方脚手架" class="headerlink" title="八、官方脚手架"></a>八、官方脚手架</h3><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/create-a-new-react-app.html#create-react-app">Create a New React App – React (reactjs.org)</a></p>
+<p>安装</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -s create-react-app</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create-react-app myapp</span><br></pre></td></tr></table></figure>
+
+<h3 id="九、网络请求"><a href="#九、网络请求" class="headerlink" title="九、网络请求"></a>九、网络请求</h3><ul>
+<li>axios</li>
+<li>fetch</li>
+</ul>
+<h4 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h4><p><a target="_blank" rel="noopener" href="http://www.axios-js.com/">axios中文网</a></p>
+<p>简单使用实例</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">axios.<span class="title function_">get</span>(<span class="string">`/api1/users?q=<span class="subst">$&#123;keyWord&#125;</span>`</span>).<span class="title function_">then</span>(</span><br><span class="line">    <span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="comment">// 成功请求后返回的响应</span></span><br><span class="line">    <span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">//请求失败后的处理</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h4><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/fetch">MDN:WorkerOrGlobalScope.fetch()</a></p>
+<p>实例</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fetch.<span class="title function_">get</span>(<span class="string">`/api1/users?q=<span class="subst">$&#123;keyWord&#125;</span>`</span>)</span><br><span class="line">.<span class="title function_">then</span>( <span class="function"><span class="params">resp</span> =&gt;</span> &#123;&#125; err =&gt; &#123;&#125;)</span><br><span class="line">.<span class="title function_">then</span>( <span class="title function_">resp</span>(data) =&gt; &#123;&#125; err =&gt; &#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>async await语法</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">async</span>() =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> response= <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">`/api1/search/users2?q=<span class="subst">$&#123;keyWord&#125;</span>`</span>)</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="title function_">json</span>()   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="十、ref"><a href="#十、ref" class="headerlink" title="十、ref"></a>十、ref</h3><p>在React中获取DOM</p>
+<p><code>ref.createRef()</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyComponent</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">props</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(props);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">myRef</span> = <span class="title class_">React</span>.<span class="title function_">createRef</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ref</span>=<span class="string">&#123;this.myRef&#125;</span> /&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回调ref</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CustomTextInput</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">props</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(props);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">textInput</span> = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">setTextInputRef</span> = <span class="function"><span class="params">element</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">textInput</span> = element;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 使用 `ref` 的回调函数将 text 输入框 DOM 节点的引用存储到 React</span></span><br><span class="line">    <span class="comment">// 实例上（比如 this.textInput）</span></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">input</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">type</span>=<span class="string">&quot;text&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">ref</span>=<span class="string">&#123;this.setTextInputRef&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        /&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>函数式组件不可以使用Ref，因为没有this</strong></li>
+<li><strong>string形式ref不推荐使用</strong></li>
+</ul>
+<h3 id="十一、react中state的管理"><a href="#十一、react中state的管理" class="headerlink" title="十一、react中state的管理"></a>十一、react中state的管理</h3><ul>
+<li>redux</li>
+<li>react-redux</li>
+</ul>
+<h4 id="redux"><a href="#redux" class="headerlink" title="redux"></a>redux</h4><h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2>
+  </div>
+</article>
+
+
+    <br />
+    <div id="vcomments"></div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81JSX"><span class="toc-number">1.1.</span> <span class="toc-text">一、JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BB%84%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">二、组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%84%E4%BB%B6%E4%B8%8A%E7%9A%84props%E5%92%8Cstate"><span class="toc-number">1.3.</span> <span class="toc-text">三、组件上的props和state</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#props"><span class="toc-number">1.3.1.</span> <span class="toc-text">props</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#state"><span class="toc-number">1.3.2.</span> <span class="toc-text">state</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">四、事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%99%9A%E6%8B%9FDOM%E3%80%81%E7%9C%9F%E5%AE%9EDOM"><span class="toc-number">1.5.</span> <span class="toc-text">五、虚拟DOM、真实DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9FDOM"><span class="toc-number">1.5.1.</span> <span class="toc-text">虚拟DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%9F%E5%AE%9EDOM"><span class="toc-number">1.5.2.</span> <span class="toc-text">真实DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E8%80%85%E5%85%B3%E7%B3%BB"><span class="toc-number">1.5.3.</span> <span class="toc-text">两者关系</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81Diff%E7%AE%97%E6%B3%95"><span class="toc-number">1.6.</span> <span class="toc-text">六、Diff算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="toc-number">1.7.</span> <span class="toc-text">七、生命周期函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6"><span class="toc-number">2.</span> <span class="toc-text">进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%AE%98%E6%96%B9%E8%84%9A%E6%89%8B%E6%9E%B6"><span class="toc-number">2.1.</span> <span class="toc-text">八、官方脚手架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="toc-number">2.2.</span> <span class="toc-text">九、网络请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#axios"><span class="toc-number">2.2.1.</span> <span class="toc-text">axios</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fetch"><span class="toc-number">2.2.2.</span> <span class="toc-text">fetch</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E3%80%81ref"><span class="toc-number">2.3.</span> <span class="toc-text">十、ref</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81react%E4%B8%ADstate%E7%9A%84%E7%AE%A1%E7%90%86"><span class="toc-number">2.4.</span> <span class="toc-text">十一、react中state的管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#redux"><span class="toc-number">2.4.1.</span> <span class="toc-text">redux</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%93%E5%B1%95"><span class="toc-number">3.</span> <span class="toc-text">拓展</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&text=React速查"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&is_video=false&description=React速查"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=React速查&body=Check out this article: https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&title=React速查"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&name=React速查&description=&lt;blockquote&gt;
+&lt;p&gt;React速记，分为3个部分。每一个部分由简短且精悍的知识点组成。开发忘记可查看，初见学习可常翻&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;基础&#34;&gt;&lt;a href=&#34;#基础&#34; class=&#34;headerlink&#34; title=&#34;基础&#34;&gt;&lt;/a&gt;基础&lt;/h2&gt;&lt;h3 id=&#34;一、JSX&#34;&gt;&lt;a href=&#34;#一、JSX&#34; class=&#34;headerlink&#34; title=&#34;一、JSX&#34;&gt;&lt;/a&gt;一、JSX&lt;/h3&gt;&lt;figure class=&#34;highlight jsx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; element = &lt;span class=&#34;language-xml&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;Hello, world!&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;JavaScript和UI代码的结合&lt;/p&gt;
+&lt;figure class=&#34;highlight jsx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; element = &lt;span class=&#34;language-xml&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;Hello, &amp;#123;name&amp;#125;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;用&lt;code&gt;&amp;#123;&amp;#125;&lt;/code&gt;包裹表达式（js表达式，变量）&lt;/p&gt;
+&lt;figure class=&#34;highlight jsx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; element = &lt;span class=&#34;language-xml&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;img&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;className&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;#123;imgClass&amp;#125;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;src&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;#123;user.avatarUrl&amp;#125;&lt;/span&gt; /&amp;gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;class&lt;/code&gt;属性写为&lt;code&gt;className&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;属性用小驼峰语法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight jsx&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; element = &lt;span class=&#34;language-xml&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;Hello, world!&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;title class_&#34;&gt;ReactDOM&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;render&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  element,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;variable language_&#34;&gt;document&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;getElementById&lt;/span&gt;(&lt;span class=&#34;string&#34;&gt;&amp;#x27;root&amp;#x27;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;一个可运行的React Hello World例子&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://mimonarchrd.gitee.io/2021/09/04/React%E9%80%9F%E6%9F%A5/&t=React速查"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021-2023
+    [object Object]
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+ 
+    <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" crossorigin="anonymous"></script> 
+  
+
+  <script type="text/javascript">
+      new Valine({
+        el: '#vcomments',
+        appId: '16RIoAUdMwdJKhah8eqwpG8e-gzGzoHsz',
+        appKey: 'rjY2FM4qe5PGNokVnDjN7TVk',
+
+        emojiCDN: '//static.xiaoblogs.cn/emoji/',
+        emojiMaps: {
+          '七海_哭哭': '七海_哭哭.png', 
+          '七海_害怕': '七海_害怕.png',
+          '七海_尴尬': '七海_尴尬.png',
+          '七海_惊讶': '七海_惊讶.png',
+          '七海_捏捏': '七海_捏捏.png', 
+          '七海_柠檬': '七海_柠檬.png', 
+          '七海_比心': '七海_比心.png', 
+          '七海_沉了': '七海_沉了.png', 
+          '七海_生闷气': '七海_生闷气.png',
+          '七海_贴贴': '七海_贴贴.png',
+          '七濑胡桃_乖巧': '七濑胡桃_乖巧.png', 
+          '七濑胡桃_元气满满': '七濑胡桃_元气满满.png',
+          '七濑胡桃_吧唧吧唧': '七濑胡桃_吧唧吧唧.png',
+          '七濑胡桃_噗': '七濑胡桃_噗.png', 
+          '七濑胡桃_好饿': '七濑胡桃_好饿.png',
+          '七濑胡桃_委屈': '七濑胡桃_委屈.png', 
+          '七濑胡桃_宅在家': '七濑胡桃_宅在家.png',
+          '七濑胡桃_我来了！': '七濑胡桃_我来了！.png',
+          '七濑胡桃_我超可爱': '七濑胡桃_我超可爱.png', 
+          '七濑胡桃_有意思': '七濑胡桃_有意思.png',
+          '七濑胡桃_泪目': '七濑胡桃_泪目.png', 
+          '七濑胡桃_熬夜': '七濑胡桃_熬夜.png',
+          '七濑胡桃_生气': '七濑胡桃_生气.png', 
+          '七濑胡桃_紧张': '七濑胡桃_紧张.png',
+          '七濑胡桃_缜密分析': '七濑胡桃_缜密分析.png', 
+          '中国绊爱2nd_AWSL': '中国绊爱2nd_AWSL.png', 
+          '中国绊爱2nd_GKD': '中国绊爱2nd_GKD.png', 
+          '中国绊爱2nd_YYDS': '中国绊爱2nd_YYDS.png', 
+          '中国绊爱2nd_不': '中国绊爱2nd_不.png', 
+          '中国绊爱2nd_哭了': '中国绊爱2nd_哭了.png',
+          '中国绊爱2nd_啊这': '中国绊爱2nd_啊这.png', 
+          '中国绊爱2nd_嘿嘿嘿': '中国绊爱2nd_嘿嘿嘿.png',
+          '中国绊爱2nd_噗': '中国绊爱2nd_噗.png', 
+          '中国绊爱2nd_地铁看手机': '中国绊爱2nd_地铁看手机.png', 
+          '中国绊爱2nd_太菜太下饭': '中国绊爱2nd_太菜太下饭.png', 
+          '中国绊爱2nd_夺笋啊': '中国绊爱2nd_夺笋啊.png', 
+          '中国绊爱2nd_害怕': '中国绊爱2nd_害怕.png', 
+          '中国绊爱2nd_快逃': '中国绊爱2nd_快逃.png', 
+          '中国绊爱2nd_我觉得OK': '中国绊爱2nd_我觉得OK.png', 
+          '中国绊爱2nd_握草': '中国绊爱2nd_握草.png', 
+          '中国绊爱2nd_有排面': '中国绊爱2nd_有排面.png', 
+          '中国绊爱2nd_狗头': '中国绊爱2nd_狗头.png', 
+          '中国绊爱2nd_生气气': '中国绊爱2nd_生气气.png', 
+          '中国绊爱2nd_知识增加了': '中国绊爱2nd_知识增加了.png', 
+          '中国绊爱2nd_芜湖': '中国绊爱2nd_芜湖.png', 
+          '嘉然_biu': '嘉然_biu.png', 
+          '嘉然_mua': '嘉然_mua.png', 
+          '嘉然_一眼真': '嘉然_一眼真.png', 
+          '嘉然_一米八': '嘉然_一米八.png', 
+          '嘉然_你好': '嘉然_你好.png', 
+          '嘉然_剪刀手': '嘉然_剪刀手.png', 
+          '嘉然_吓人': '嘉然_吓人.png', 
+          '嘉然_嘉人们': '嘉然_嘉人们.png', 
+          '嘉然_嘉油': '嘉然_嘉油.png', 
+          '嘉然_嘉速心动': '嘉然_嘉速心动.png', 
+          '嘉然_安详': '嘉然_安详.png', 
+          '嘉然_敲打': '嘉然_敲打.png', 
+          '嘉然_暗中观察': '嘉然_暗中观察.png', 
+          '嘉然_流口水': '嘉然_流口水.png', 
+          '嘉然_点赞': '嘉然_点赞.png', 
+          '嘉然_略略略': '嘉然_略略略.png', 
+          '嘉然_番茄炒蛋拳': '嘉然_番茄炒蛋拳.png', 
+          '嘉然_笔芯': '嘉然_笔芯.png', 
+          '嘉然_绷不住了': '嘉然_绷不住了.png', 
+          '嘉然_锤头丧气': '嘉然_锤头丧气.png', 
+          '小希小桃_ai有力量': '小希小桃_ai有力量.png', 
+          '小希小桃_mua': '小希小桃_mua.png', 
+          '小希小桃_变成河豚': '小希小桃_变成河豚.png', 
+          '小希小桃_呆丝ki': '小希小桃_呆丝ki.png', 
+          '小希小桃_土土土': '小希小桃_土土土.png', 
+          '小希小桃_委屈': '小希小桃_委屈.png', 
+          '小希小桃_孜然一身': '小希小桃_孜然一身.png', 
+          '小希小桃_对不起': '小希小桃_对不起.png', 
+          '小希小桃_得意': '小希小桃_得意.png', 
+          '小希小桃_想peach': '小希小桃_想peach.png', 
+          '小希小桃_桃桃我悟了': '小希小桃_桃桃我悟了.png', 
+          '小希小桃_比心': '小希小桃_比心.png', 
+          '小希小桃_给你一斧': '小希小桃_给你一斧.png', 
+          '小希小桃_绝望': '小希小桃_绝望.png', 
+          '小希小桃_茶茶': '小希小桃_茶茶.png', 
+          '小希小桃_蚌埠住了': '小希小桃_蚌埠住了.png', 
+          '小希小桃_被气晕': '小希小桃_被气晕.png', 
+          '小希小桃_这样那样': '小希小桃_这样那样.png', 
+          '小希小桃_震惊': '小希小桃_震惊.png', 
+          '小希小桃_？？？': '小希小桃_？？？.png', 
+          '泠鸢yousa_awsl': '泠鸢yousa_awsl.png', 
+          '泠鸢yousa_加大力度': '泠鸢yousa_加大力度.png', 
+          '泠鸢yousa_大哭': '泠鸢yousa_大哭.png', 
+          '泠鸢yousa_头晕': '泠鸢yousa_头晕.png', 
+          '泠鸢yousa_好人卡': '泠鸢yousa_好人卡.png', 
+          '泠鸢yousa_干杯': '泠鸢yousa_干杯.png', 
+          '泠鸢yousa_惊讶': '泠鸢yousa_惊讶.png', 
+          '泠鸢yousa_打call': '泠鸢yousa_打call.png', 
+          '泠鸢yousa_沉默': '泠鸢yousa_沉默.png', 
+          '泠鸢yousa_滑稽': '泠鸢yousa_滑稽.png', 
+          '泠鸢yousa_生气': '泠鸢yousa_生气.png', 
+          '泠鸢yousa_真棒': '泠鸢yousa_真棒.png', 
+          '泠鸢yousa_请吃桃': '泠鸢yousa_请吃桃.png', 
+          '泠鸢yousa_贴贴': '泠鸢yousa_贴贴.png', 
+          '泠鸢yousa_问号': '泠鸢yousa_问号.png', 
+          '白神遥_5835': '白神遥_5835.png', 
+          '白神遥_kusa': '白神遥_kusa.png', 
+          '白神遥_加油': '白神遥_加油.png', 
+          '白神遥_吃惊': '白神遥_吃惊.png', 
+          '白神遥_吃桃子': '白神遥_吃桃子.png', 
+          '白神遥_吃瓜': '白神遥_吃瓜.png', 
+          '白神遥_呆呆': '白神遥_呆呆.png', 
+          '白神遥_哭哭': '白神遥_哭哭.png', 
+          '白神遥_好耶': '白神遥_好耶.png', 
+          '白神遥_晚安': '白神遥_晚安.png', 
+          '白神遥_柠檬': '白神遥_柠檬.png', 
+          '白神遥_滑稽': '白神遥_滑稽.png', 
+          '白神遥_点赞': '白神遥_点赞.png', 
+          '白神遥_让我康康': '白神遥_让我康康.png', 
+          '白神遥_豹怒': '白神遥_豹怒.png', 
+          '白神遥_豹笑': '白神遥_豹笑.png', 
+          '白神遥_跳脸': '白神遥_跳脸.png', 
+          '白神遥_问号': '白神遥_问号.png', 
+          '白神遥_阿巴阿巴': '白神遥_阿巴阿巴.png', 
+          '白神遥_骄傲': '白神遥_骄傲.png', 
+          '阿梓_不怕困难': '阿梓_不怕困难.png', 
+          '阿梓_别走好吗': '阿梓_别走好吗.png', 
+          '阿梓_可爱捏': '阿梓_可爱捏.png', 
+          '阿梓_吹溜溜笛': '阿梓_吹溜溜笛.png', 
+          '阿梓_咋回事捏': '阿梓_咋回事捏.png', 
+          '阿梓_哭哭': '阿梓_哭哭.png', 
+          '阿梓_大家好呀': '阿梓_大家好呀.png', 
+          '阿梓_太破费了': '阿梓_太破费了.png', 
+          '阿梓_安静一下': '阿梓_安静一下.png', 
+          '阿梓_就这？': '阿梓_就这？.png', 
+          '阿梓_忍者修行': '阿梓_忍者修行.png', 
+          '阿梓_恰饱饱': '阿梓_恰饱饱.png', 
+          '阿梓_我是楞啊': '阿梓_我是楞啊.png', 
+          '阿梓_我晒吗': '阿梓_我晒吗.png', 
+          '阿梓_拳头硬了': '阿梓_拳头硬了.png', 
+          '阿梓_拿个快递': '阿梓_拿个快递.png', 
+          '阿梓_歪歪歪': '阿梓_歪歪歪.png', 
+          '阿梓_真接受不了': '阿梓_真接受不了.png', 
+          '阿梓_真牛蛙': '阿梓_真牛蛙.png', 
+          '阿梓_谢谢你呀': '阿梓_谢谢你呀.png'
+      }
+    })
+  </script>
+
+</body>
+</html>

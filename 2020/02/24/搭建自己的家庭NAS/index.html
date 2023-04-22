@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="这篇文章是不是很眼熟，哈哈。以前的NAS是用树莓派搭建的，那会儿主要是接触下NAS，看一看有什么主流NAS系统。相当于一个玩具。但是这个搭建一个像样的NAS一直在我的脑海里 这篇文章最终的目标是All-in-One的NAS，所以会持续的更新。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建自己的家庭NAS">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/index.html">
+<meta property="og:site_name" content="集合">
+<meta property="og:description" content="这篇文章是不是很眼熟，哈哈。以前的NAS是用树莓派搭建的，那会儿主要是接触下NAS，看一看有什么主流NAS系统。相当于一个玩具。但是这个搭建一个像样的NAS一直在我的脑海里 这篇文章最终的目标是All-in-One的NAS，所以会持续的更新。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-24T04:19:52.000Z">
+<meta property="article:modified_time" content="2021-09-02T00:14:16.000Z">
+<meta property="article:author" content="[object Object]">
+<meta property="article:tag" content="AIO">
+<meta property="article:tag" content="NAS">
+<meta property="article:tag" content="网络附属存储">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.ico" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+        
+      
+    
+    <!-- title -->
+    <title>搭建自己的家庭NAS</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+    <!-- 百度统计 -->
+    
+      <script src="https://hm.baidu.com/hm.js?1baad79f3aa5081fc9ff11dc24c8a93a"></script>
+    
+    <!-- mathjax -->
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/css/vBanner.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="集合" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2020/04/30/%E3%80%8A%E5%8A%A8%E6%A3%AE%E3%80%8B%E7%99%BB%E4%B8%8A%E3%80%8A%E9%87%91%E8%9E%8D%E6%97%B6%E6%8A%A5%E3%80%8B%E5%A4%B4%E7%89%88%20%E5%9B%A0Nook%E9%93%B6%E8%A1%8C%E5%88%A9%E7%8E%87%E4%B8%8B%E8%B0%83/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2020/02/03/Linux%E4%B8%8A%E8%87%AA%E5%8A%A8%E6%A3%80%E6%B5%8B%E8%BF%9B%E7%A8%8B%E4%B8%94%E9%87%8D%E5%90%AF%E8%BF%9B%E7%A8%8B%E7%9A%84shell(%E8%BD%AC%E8%BD%BD)/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&text=搭建自己的家庭NAS"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&is_video=false&description=搭建自己的家庭NAS"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=搭建自己的家庭NAS&body=Check out this article: https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&name=搭建自己的家庭NAS&description=&lt;p&gt;这篇文章是不是很眼熟，哈哈。以前的NAS是用树莓派搭建的，那会儿主要是接触下NAS，看一看有什么主流NAS系统。相当于一个玩具。但是这个搭建一个像样的NAS一直在我的脑海里&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这篇文章最终的目标是All-in-One的NAS，所以会持续的更新。&lt;/strong&gt;  &lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&t=搭建自己的家庭NAS"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    
+    <div id="vBanner_Root">
+        <div id="vBanner_Container" style="background-image: linear-gradient(to bottom right, white , #FDC888)">
+            <a target="_blank" rel="noopener" href="https://www.pixiv.net/artworks/88263776">
+                
+                    <div id="vBanner_post" title="艾露露Ailurus" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/88263776_p01.png)"></div>
+                
+            </a>
+            <div id="vLogo_Container">
+                 
+                            
+                        <div id="vBanner_logo" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/%E8%89%BE%E9%9C%B2%E9%9C%B2%EF%BC%88logo%EF%BC%89.png)"></div>
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        搭建自己的家庭NAS
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">[object Object]</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-24T04:19:52.000Z" itemprop="datePublished">2020-02-24</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E5%91%A6/">学习呦</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/AIO/" rel="tag">AIO</a>, <a class="tag-link-link" href="/tags/NAS/" rel="tag">NAS</a>, <a class="tag-link-link" href="/tags/%E7%BD%91%E7%BB%9C%E9%99%84%E5%B1%9E%E5%AD%98%E5%82%A8/" rel="tag">网络附属存储</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>这篇文章是不是很眼熟，哈哈。以前的NAS是用树莓派搭建的，那会儿主要是接触下NAS，看一看有什么主流NAS系统。相当于一个玩具。但是这个搭建一个像样的NAS一直在我的脑海里</p>
+<p><strong>这篇文章最终的目标是All-in-One的NAS，所以会持续的更新。</strong>  </p>
+<span id="more"></span>
+
+<p><strong>搭建目的、用途</strong></p>
+<p>首先，家里面有很多照片视频，都是这些年来拍的。但是都在硬盘上不方便查看，而且如果有了新的照片，还要用手机连接电脑去导入。极度的不方便，有些人说你用QQ啊，或者是别人的Cloud服务。那些不方便，而且我想自己做一点这方面的开发，并且DIY。不满足我的要求</p>
+<p>第二，平时我的下载需求很多，有时候有多个下载的需求。需要一台下载机，支持BT，种子，磁力链，http等等协议</p>
+<p>第三，在家电脑上有大文件，需要往别的房间的电脑等设备传输。如果用一个u盘去那样拷贝来，拷贝去真的非常的不方便。需要一个共享中心，能让我们家的所有设备连接到上面，甚至需要穿透服务</p>
+<p>第四，平时家里的电视智能设备都是连接到WiFi下的，投屏倒是手机可以，但还是想弄一个视频库， Kodi, Emby , Jellyfin, Plex倒是能满足</p>
+<p>第五，其实这一点才是最重要的，价格要相对便宜，性能要好。但是我最后发现还是有过剩，不过过剩的性能倒是可以允许更多的可玩性</p>
+<p>第六，我的先头计划是直接装OMV，但是也可以用EXSi。运行多个系统。（其实还是OMV和Ubuntu）而且用了extra肯定要用docker</p>
+<p>第七，功耗问题。我的这一套下来的预计功耗是一个月2-3块钱电费吧。实际功耗我也没有专业设备所以没有测试。我最终没有选择EXSi方案就在于功耗</p>
+<p><strong>硬件准备</strong></p>
+<p>这一次的NAS计划是二手优先，首先就是便宜，有性价比。但是最后只有电源是二手的，不过也是不错的1U电源。甚至发现很多可以再优化价钱的地方，但是都买回来了，放宽心态就好。</p>
+<p>首先是CPU：树莓派的ARM处理视频解码推流等能力很孱弱。这里选定了G5400和G4900最后因为差价的70块钱还是选择了G4900。支持H.265硬解，而且是8代U。不过这里如果要用我还是建议无脑G5400</p>
+<p>不是打广告啊</p>
+<p>下来是主板：我选择的是华擎的H310主板，4个sata，1个pcie，支持8代U。但我这里推荐可以用B150系列的魔改主板让其支持8代U，B系列拓展性比H系列好很多。可以加装NVME硬盘等。做工也要好。而且H系列是新的主板要贵</p>
+<p>硬盘：一块西数的蓝盘+手头有余的一块金士顿SSD装系统的（说实话是真浪费，120G装OMV最后最多就用10-15G）</p>
+<p>内存：英睿达DDR4 2133Hz。没什么好说的，正好赶上内存涨价的时候买的</p>
+<p>电源：台达1U电源，这种电源真贵啊</p>
+<p>机箱部分：我是用lego组的哦</p>
+<p>总共下来花了我1100元左右吧，这些还不包括后面软路由等其他的设备，而且硬盘现在只有一块。只能说“壕”无性价比</p>
+<p><strong>安装OMV</strong></p>
+<p>安装的过程就是用u盘制作一个OMV的系统，这里我放两个镜像，一个5.0.5版本一个是4.1.22版本</p>
+<ul>
+<li>  <strong><em>5.0.5</em></strong></li>
+<li>  <strong><em>4.1.22</em></strong></li>
+</ul>
+<p>安装一步一步走就行，注意要有一个显示器，VGA和HDMI都是可以的哦。如果通过路由器的管理工具可以看见自己的NAS的IP，用ssh就可以不用显示器了</p>
+<p>其中软件源我用的中科大的ustc的（推荐哦）</p>
+<p>安装完成后就登录吧</p>
+<p>这里我再放一遍NAS Web登录的默认用户名和密码和ssh登录的默认用户名密码</p>
+<p><strong>初配置NAS</strong></p>
+<p>简单来说就是熟悉这个OMV的panel以及配置密码、静态IP、安装omv-extra、更新软件包</p>
+<p>我们先在“更新管理”里面更新软件包~PS.时间很长，慢慢等待….</p>
+<p>一共90多个软件包….更新</p>
+<p>等了3小时，真的不容易</p>
+<p>配置静态IP，在网络里面，就不截图了</p>
+<p>之后是安装OMV-extra安装包</p>
+<p>我安装的是5.0.5的版本，但是找不到omv-extra插件了，这个插件是一个拓展的软件包，可以安装大型的软件包，docker啊什么的</p>
+<p>之后就是找到<a target="_blank" rel="noopener" href="http://omv-extras.org/">omv-extra官网</a></p>
+<p>这里提供5.0.5版本的拓展包</p>
+<ul>
+<li>  官网</li>
+<li>  我的私有云盘</li>
+</ul>
+<p>上传的时候遇到了一个问题</p>
+<p>去系统日志一看，原来是没有设置timezone（时区）</p>
+<p>在“日期与时间”中设置，设置完了还是有问题。日志中显示php的致命错误，显示有一个东西找不到，我是通过更新后可以上传下载好的deb的</p>
+<p>安装完成了，这里注意下，你安装完了要用最新的extra软件包</p>
+<p>也可以在shell中安装</p>
+<pre><code>wget -O - https://gitee.com/Z_ero/packages/raw/master/install | bash
+</code></pre>
+<p>安装好了</p>
+<p>之后就是安装extra中的docker和portainer。docker不用说了吧，portainer是docker的可视化管理工具。很方便的就可以pull一个容器&amp;镜像、一键部署等选项真乃神器啊</p>
+<p>都安装好了</p>
+<p>之后直接在9000端口访问portainer</p>
+<p>这里我省略了一些步骤，比如建立docker仓库等。这里我建立了一个local本地的仓库</p>
+<p><strong>OMV的高级一点的玩法</strong></p>
+<p>终于开始搭建我们的服务了</p>
+<p>未完待续呦……</p>
+
+  </div>
+</article>
+
+
+    <br />
+    <div id="vcomments"></div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&text=搭建自己的家庭NAS"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&is_video=false&description=搭建自己的家庭NAS"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=搭建自己的家庭NAS&body=Check out this article: https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&title=搭建自己的家庭NAS"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&name=搭建自己的家庭NAS&description=&lt;p&gt;这篇文章是不是很眼熟，哈哈。以前的NAS是用树莓派搭建的，那会儿主要是接触下NAS，看一看有什么主流NAS系统。相当于一个玩具。但是这个搭建一个像样的NAS一直在我的脑海里&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这篇文章最终的目标是All-in-One的NAS，所以会持续的更新。&lt;/strong&gt;  &lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://mimonarchrd.gitee.io/2020/02/24/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AE%B6%E5%BA%ADNAS/&t=搭建自己的家庭NAS"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021-2023
+    [object Object]
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+ 
+    <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" crossorigin="anonymous"></script> 
+  
+
+  <script type="text/javascript">
+      new Valine({
+        el: '#vcomments',
+        appId: '16RIoAUdMwdJKhah8eqwpG8e-gzGzoHsz',
+        appKey: 'rjY2FM4qe5PGNokVnDjN7TVk',
+
+        emojiCDN: '//static.xiaoblogs.cn/emoji/',
+        emojiMaps: {
+          '七海_哭哭': '七海_哭哭.png', 
+          '七海_害怕': '七海_害怕.png',
+          '七海_尴尬': '七海_尴尬.png',
+          '七海_惊讶': '七海_惊讶.png',
+          '七海_捏捏': '七海_捏捏.png', 
+          '七海_柠檬': '七海_柠檬.png', 
+          '七海_比心': '七海_比心.png', 
+          '七海_沉了': '七海_沉了.png', 
+          '七海_生闷气': '七海_生闷气.png',
+          '七海_贴贴': '七海_贴贴.png',
+          '七濑胡桃_乖巧': '七濑胡桃_乖巧.png', 
+          '七濑胡桃_元气满满': '七濑胡桃_元气满满.png',
+          '七濑胡桃_吧唧吧唧': '七濑胡桃_吧唧吧唧.png',
+          '七濑胡桃_噗': '七濑胡桃_噗.png', 
+          '七濑胡桃_好饿': '七濑胡桃_好饿.png',
+          '七濑胡桃_委屈': '七濑胡桃_委屈.png', 
+          '七濑胡桃_宅在家': '七濑胡桃_宅在家.png',
+          '七濑胡桃_我来了！': '七濑胡桃_我来了！.png',
+          '七濑胡桃_我超可爱': '七濑胡桃_我超可爱.png', 
+          '七濑胡桃_有意思': '七濑胡桃_有意思.png',
+          '七濑胡桃_泪目': '七濑胡桃_泪目.png', 
+          '七濑胡桃_熬夜': '七濑胡桃_熬夜.png',
+          '七濑胡桃_生气': '七濑胡桃_生气.png', 
+          '七濑胡桃_紧张': '七濑胡桃_紧张.png',
+          '七濑胡桃_缜密分析': '七濑胡桃_缜密分析.png', 
+          '中国绊爱2nd_AWSL': '中国绊爱2nd_AWSL.png', 
+          '中国绊爱2nd_GKD': '中国绊爱2nd_GKD.png', 
+          '中国绊爱2nd_YYDS': '中国绊爱2nd_YYDS.png', 
+          '中国绊爱2nd_不': '中国绊爱2nd_不.png', 
+          '中国绊爱2nd_哭了': '中国绊爱2nd_哭了.png',
+          '中国绊爱2nd_啊这': '中国绊爱2nd_啊这.png', 
+          '中国绊爱2nd_嘿嘿嘿': '中国绊爱2nd_嘿嘿嘿.png',
+          '中国绊爱2nd_噗': '中国绊爱2nd_噗.png', 
+          '中国绊爱2nd_地铁看手机': '中国绊爱2nd_地铁看手机.png', 
+          '中国绊爱2nd_太菜太下饭': '中国绊爱2nd_太菜太下饭.png', 
+          '中国绊爱2nd_夺笋啊': '中国绊爱2nd_夺笋啊.png', 
+          '中国绊爱2nd_害怕': '中国绊爱2nd_害怕.png', 
+          '中国绊爱2nd_快逃': '中国绊爱2nd_快逃.png', 
+          '中国绊爱2nd_我觉得OK': '中国绊爱2nd_我觉得OK.png', 
+          '中国绊爱2nd_握草': '中国绊爱2nd_握草.png', 
+          '中国绊爱2nd_有排面': '中国绊爱2nd_有排面.png', 
+          '中国绊爱2nd_狗头': '中国绊爱2nd_狗头.png', 
+          '中国绊爱2nd_生气气': '中国绊爱2nd_生气气.png', 
+          '中国绊爱2nd_知识增加了': '中国绊爱2nd_知识增加了.png', 
+          '中国绊爱2nd_芜湖': '中国绊爱2nd_芜湖.png', 
+          '嘉然_biu': '嘉然_biu.png', 
+          '嘉然_mua': '嘉然_mua.png', 
+          '嘉然_一眼真': '嘉然_一眼真.png', 
+          '嘉然_一米八': '嘉然_一米八.png', 
+          '嘉然_你好': '嘉然_你好.png', 
+          '嘉然_剪刀手': '嘉然_剪刀手.png', 
+          '嘉然_吓人': '嘉然_吓人.png', 
+          '嘉然_嘉人们': '嘉然_嘉人们.png', 
+          '嘉然_嘉油': '嘉然_嘉油.png', 
+          '嘉然_嘉速心动': '嘉然_嘉速心动.png', 
+          '嘉然_安详': '嘉然_安详.png', 
+          '嘉然_敲打': '嘉然_敲打.png', 
+          '嘉然_暗中观察': '嘉然_暗中观察.png', 
+          '嘉然_流口水': '嘉然_流口水.png', 
+          '嘉然_点赞': '嘉然_点赞.png', 
+          '嘉然_略略略': '嘉然_略略略.png', 
+          '嘉然_番茄炒蛋拳': '嘉然_番茄炒蛋拳.png', 
+          '嘉然_笔芯': '嘉然_笔芯.png', 
+          '嘉然_绷不住了': '嘉然_绷不住了.png', 
+          '嘉然_锤头丧气': '嘉然_锤头丧气.png', 
+          '小希小桃_ai有力量': '小希小桃_ai有力量.png', 
+          '小希小桃_mua': '小希小桃_mua.png', 
+          '小希小桃_变成河豚': '小希小桃_变成河豚.png', 
+          '小希小桃_呆丝ki': '小希小桃_呆丝ki.png', 
+          '小希小桃_土土土': '小希小桃_土土土.png', 
+          '小希小桃_委屈': '小希小桃_委屈.png', 
+          '小希小桃_孜然一身': '小希小桃_孜然一身.png', 
+          '小希小桃_对不起': '小希小桃_对不起.png', 
+          '小希小桃_得意': '小希小桃_得意.png', 
+          '小希小桃_想peach': '小希小桃_想peach.png', 
+          '小希小桃_桃桃我悟了': '小希小桃_桃桃我悟了.png', 
+          '小希小桃_比心': '小希小桃_比心.png', 
+          '小希小桃_给你一斧': '小希小桃_给你一斧.png', 
+          '小希小桃_绝望': '小希小桃_绝望.png', 
+          '小希小桃_茶茶': '小希小桃_茶茶.png', 
+          '小希小桃_蚌埠住了': '小希小桃_蚌埠住了.png', 
+          '小希小桃_被气晕': '小希小桃_被气晕.png', 
+          '小希小桃_这样那样': '小希小桃_这样那样.png', 
+          '小希小桃_震惊': '小希小桃_震惊.png', 
+          '小希小桃_？？？': '小希小桃_？？？.png', 
+          '泠鸢yousa_awsl': '泠鸢yousa_awsl.png', 
+          '泠鸢yousa_加大力度': '泠鸢yousa_加大力度.png', 
+          '泠鸢yousa_大哭': '泠鸢yousa_大哭.png', 
+          '泠鸢yousa_头晕': '泠鸢yousa_头晕.png', 
+          '泠鸢yousa_好人卡': '泠鸢yousa_好人卡.png', 
+          '泠鸢yousa_干杯': '泠鸢yousa_干杯.png', 
+          '泠鸢yousa_惊讶': '泠鸢yousa_惊讶.png', 
+          '泠鸢yousa_打call': '泠鸢yousa_打call.png', 
+          '泠鸢yousa_沉默': '泠鸢yousa_沉默.png', 
+          '泠鸢yousa_滑稽': '泠鸢yousa_滑稽.png', 
+          '泠鸢yousa_生气': '泠鸢yousa_生气.png', 
+          '泠鸢yousa_真棒': '泠鸢yousa_真棒.png', 
+          '泠鸢yousa_请吃桃': '泠鸢yousa_请吃桃.png', 
+          '泠鸢yousa_贴贴': '泠鸢yousa_贴贴.png', 
+          '泠鸢yousa_问号': '泠鸢yousa_问号.png', 
+          '白神遥_5835': '白神遥_5835.png', 
+          '白神遥_kusa': '白神遥_kusa.png', 
+          '白神遥_加油': '白神遥_加油.png', 
+          '白神遥_吃惊': '白神遥_吃惊.png', 
+          '白神遥_吃桃子': '白神遥_吃桃子.png', 
+          '白神遥_吃瓜': '白神遥_吃瓜.png', 
+          '白神遥_呆呆': '白神遥_呆呆.png', 
+          '白神遥_哭哭': '白神遥_哭哭.png', 
+          '白神遥_好耶': '白神遥_好耶.png', 
+          '白神遥_晚安': '白神遥_晚安.png', 
+          '白神遥_柠檬': '白神遥_柠檬.png', 
+          '白神遥_滑稽': '白神遥_滑稽.png', 
+          '白神遥_点赞': '白神遥_点赞.png', 
+          '白神遥_让我康康': '白神遥_让我康康.png', 
+          '白神遥_豹怒': '白神遥_豹怒.png', 
+          '白神遥_豹笑': '白神遥_豹笑.png', 
+          '白神遥_跳脸': '白神遥_跳脸.png', 
+          '白神遥_问号': '白神遥_问号.png', 
+          '白神遥_阿巴阿巴': '白神遥_阿巴阿巴.png', 
+          '白神遥_骄傲': '白神遥_骄傲.png', 
+          '阿梓_不怕困难': '阿梓_不怕困难.png', 
+          '阿梓_别走好吗': '阿梓_别走好吗.png', 
+          '阿梓_可爱捏': '阿梓_可爱捏.png', 
+          '阿梓_吹溜溜笛': '阿梓_吹溜溜笛.png', 
+          '阿梓_咋回事捏': '阿梓_咋回事捏.png', 
+          '阿梓_哭哭': '阿梓_哭哭.png', 
+          '阿梓_大家好呀': '阿梓_大家好呀.png', 
+          '阿梓_太破费了': '阿梓_太破费了.png', 
+          '阿梓_安静一下': '阿梓_安静一下.png', 
+          '阿梓_就这？': '阿梓_就这？.png', 
+          '阿梓_忍者修行': '阿梓_忍者修行.png', 
+          '阿梓_恰饱饱': '阿梓_恰饱饱.png', 
+          '阿梓_我是楞啊': '阿梓_我是楞啊.png', 
+          '阿梓_我晒吗': '阿梓_我晒吗.png', 
+          '阿梓_拳头硬了': '阿梓_拳头硬了.png', 
+          '阿梓_拿个快递': '阿梓_拿个快递.png', 
+          '阿梓_歪歪歪': '阿梓_歪歪歪.png', 
+          '阿梓_真接受不了': '阿梓_真接受不了.png', 
+          '阿梓_真牛蛙': '阿梓_真牛蛙.png', 
+          '阿梓_谢谢你呀': '阿梓_谢谢你呀.png'
+      }
+    })
+  </script>
+
+</body>
+</html>

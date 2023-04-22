@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="NAS-网络附属存储，就是把服务和存储分离开来，分别实现。说到这个，为什么搭建NAS呢，先说下家里的电子设备的环境，4台电脑，两个笔记本两个台式。之间传输资源数据都是靠移动硬盘什么的，自己的网盘seafile。很不方便。而且家里的媒体服务器没有，现在投屏看一看视频或者是一遍看视频一遍下载文件这样的形成了一种带宽的两极化，用的时候几乎占满带宽，不用的时候根本不占带宽。算是一种资源的浪费，也就让我萌生">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派的又一次折腾-搭建家用NAS">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/index.html">
+<meta property="og:site_name" content="集合">
+<meta property="og:description" content="NAS-网络附属存储，就是把服务和存储分离开来，分别实现。说到这个，为什么搭建NAS呢，先说下家里的电子设备的环境，4台电脑，两个笔记本两个台式。之间传输资源数据都是靠移动硬盘什么的，自己的网盘seafile。很不方便。而且家里的媒体服务器没有，现在投屏看一看视频或者是一遍看视频一遍下载文件这样的形成了一种带宽的两极化，用的时候几乎占满带宽，不用的时候根本不占带宽。算是一种资源的浪费，也就让我萌生">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-07T08:22:49.000Z">
+<meta property="article:modified_time" content="2021-09-05T13:31:28.000Z">
+<meta property="article:author" content="[object Object]">
+<meta property="article:tag" content="NAS">
+<meta property="article:tag" content="OVM">
+<meta property="article:tag" content="树莓派">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.ico" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+        
+      
+    
+    <!-- title -->
+    <title>树莓派的又一次折腾-搭建家用NAS</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+    <!-- 百度统计 -->
+    
+      <script src="https://hm.baidu.com/hm.js?1baad79f3aa5081fc9ff11dc24c8a93a"></script>
+    
+    <!-- mathjax -->
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/css/vBanner.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="集合" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2019/10/04/231/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2019/06/11/HUAWEI%20ATLAS200%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%EF%BC%88%E4%B8%89%EF%BC%89%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E5%AE%9E%E4%BE%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&text=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&is_video=false&description=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=树莓派的又一次折腾-搭建家用NAS&body=Check out this article: https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&name=树莓派的又一次折腾-搭建家用NAS&description=&lt;p&gt;NAS-网络附属存储，就是把服务和存储分离开来，分别实现。说到这个，为什么搭建NAS呢，先说下家里的电子设备的环境，4台电脑，两个笔记本两个台式。之间传输资源数据都是靠移动硬盘什么的，自己的网盘seafile。很不方便。而且家里的媒体服务器没有，现在投屏看一看视频或者是一遍看视频一遍下载文件这样的形成了一种带宽的两极化，用的时候几乎占满带宽，不用的时候根本不占带宽。算是一种资源的浪费，也就让我萌生了自建NAS的想法。&lt;/p&gt;
+&lt;p&gt;话不多说，现在就开始。  &lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&t=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    
+    <div id="vBanner_Root">
+        <div id="vBanner_Container" style="background-image: linear-gradient(to bottom right, white , #FDC888)">
+            <a target="_blank" rel="noopener" href="https://www.pixiv.net/artworks/88263776">
+                
+                    <div id="vBanner_post" title="艾露露Ailurus" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/88263776_p01.png)"></div>
+                
+            </a>
+            <div id="vLogo_Container">
+                 
+                            
+                        <div id="vBanner_logo" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/%E8%89%BE%E9%9C%B2%E9%9C%B2%EF%BC%88logo%EF%BC%89.png)"></div>
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        树莓派的又一次折腾-搭建家用NAS
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">[object Object]</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-08-07T08:22:49.000Z" itemprop="datePublished">2019-08-07</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E5%91%A6/">学习呦</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/NAS/" rel="tag">NAS</a>, <a class="tag-link-link" href="/tags/OVM/" rel="tag">OVM</a>, <a class="tag-link-link" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag">树莓派</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>NAS-网络附属存储，就是把服务和存储分离开来，分别实现。说到这个，为什么搭建NAS呢，先说下家里的电子设备的环境，4台电脑，两个笔记本两个台式。之间传输资源数据都是靠移动硬盘什么的，自己的网盘seafile。很不方便。而且家里的媒体服务器没有，现在投屏看一看视频或者是一遍看视频一遍下载文件这样的形成了一种带宽的两极化，用的时候几乎占满带宽，不用的时候根本不占带宽。算是一种资源的浪费，也就让我萌生了自建NAS的想法。</p>
+<p>话不多说，现在就开始。  </p>
+<span id="more"></span>
+
+<p>NAS系统有很多，群晖、FreeNAS、NAS4FREE、还有我用的OpenMediaVault。选择OMV的原因是正好看见有树莓派的镜像，因为家里闲置的能长时间运行并且功耗小的也就树莓派了，虽然OMV官方都有“善意”提示</p>
+<p>。。。</p>
+<p>不过，家里除了我们一家三口用一用应该就没别人用了，性能足够了。还有就是以前听过的FreeNas，没选它的原因就是人家只支持64位。。树莓派是arm-v7</p>
+<p>首先是去官网下载镜像，还有去找一个烧录镜像的工具</p>
+<p><a target="_blank" rel="noopener" href="https://www.openmediavault.org/">官网链接点这里</a>（建议玩这些都要有小飞机）</p>
+<p><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/openmediavault/files/">官方提供的镜像下载地址</a>（没用小飞机下载真的很痛苦哦）</p>
+<p>我把镜像（ Raspberry Pi 2B, 3B and 3B+ 都可以用）放到了<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1kYw_ezTNKn6_3vtTdUGkAA">百度云</a> （提取码：5xhn） 上和<a target="_blank" rel="noopener" href="http://seafile.xiaoblogs.cn:8000/f/10dcdcade53f4690991d/">自己的网盘seafile</a>上</p>
+<p>制作系统的工具也是在<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1E6c9t4VxasgkkOPFiEicMA">百度云</a>（提取码：ljqv）和<a target="_blank" rel="noopener" href="http://seafile.xiaoblogs.cn:8000/f/519a014ad8d6404ba23b/">私有云盘</a>上</p>
+<p>制作的过程真是一键操作，把SD卡插入电脑用工具一键制作就行了</p>
+<p>速度挺快</p>
+<p>之后就是插卡上电~</p>
+<p><strong>登录的用户名和密码不一样</strong></p>
+<p>Web应用的用户是admin，shell的用户是root</p>
+<p>注意要用root用户登录</p>
+<p>登录之后看到没有IP，如果你的树莓派插上路由器网线都没有获取到IP那么可以通过命令</p>
+<pre><code>armbian-config
+</code></pre>
+<p>进入armbian的配置界面，或者通过命令</p>
+<pre><code>nmtui
+</code></pre>
+<p>进入网卡的设置界面，配置自己的网卡</p>
+<p>这里我碰到一个有趣的问题，我们家里的拓扑结构是这样的</p>
+<p>为了方便，交换机，网关，路由器都变画成路由器了</p>
+<p>刚开始给NAS（树莓派）分配IP的时候错误的连接到了子网路由器（TP-Link上），结果就是分配了子网网段的IP，但是手动给配置的IP和网关都是天翼网关的。结果就是局域网内能连通，无法上外网。</p>
+<p>反正，我也搞不懂家里为什么这种拓扑结构。。</p>
+<p>如果你的家里只有一个路由器就能解决一些问题。</p>
+<p>之后进入系统（我因为手动配置IP的时候直接用的HDMI外接显示器，树莓派的输出都在显示器上，不要吐槽我手机拍屏幕）发现nginx启动不了。这可不行啊，Web服务都是在nginx上，这样就用不了Web应用。</p>
+<p>用命令看下nginx的状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status nginx</span><br></pre></td></tr></table></figure>
+
+
+<p>提示地址簇不支持这种协议</p>
+<p>好吧，来到/etc/nginx/sites-available/openmediavault-webgui下看（OMV配置文件）</p>
+<p>listen这里怎么会这样写？</p>
+<p>“#”注释的是错误的，[::]正则表达式代表0.0.0.0任何访问的IP，后面的80就是http了，只要用下面的写法就行。</p>
+<p>成功启动nginx进程</p>
+<p>去浏览器访问web应用吧</p>
+<p>这里的登录用户是admin哦</p>
+<p>之后就是配置一气了，首先注意要先允许root用户通过ssh登录shell，要不然，只能外接显示器连接服务器了哦</p>
+<p>注意了，ssh很关键的。远程ssh后期的维护都是靠shell呢</p>
+<p>基本的配置在<strong>System栏</strong></p>
+<p>可以设置web服务器监听的端口，配置https，域名（外网访问）。设置时间时区。邮件通知（需要stmp服务器，其他两个协议的也行pop3和IMAP。性能监视，还有有意思的定时任务（比如备份策略什么的）还有就是装东西的OMV-Plugin（OMV插件）和OMV-Extras（OMV拓展）</p>
+<p><strong>Storage栏：</strong></p>
+<p>存储设备设置的地方，有物理磁盘（physical disks）磁盘监视器，RAID冗余磁盘阵列。一键挂载的file system设置和u盘flash（不建议用u盘）</p>
+<p>正好家里的一块希捷的1T的HDD只是作为移动设备使用，来，格式化成ext4之后挂载了。</p>
+<p>插到树莓派上就可以，不知道能不能热插拔</p>
+<p>现在只是识别了这一块硬盘，当然，如果你的硬盘是ntfs最好要转换格式成ext4哦，否则会出一些错误</p>
+<p>这里的错误是系统内核的错误</p>
+<p>倒不是内核编译问题导致模块不能用，而是内核版本太低不支持虚拟化磁盘</p>
+<pre><code>apt-get install kernel*
+</code></pre>
+<p>上面的命令就是升级内核的</p>
+<p>选中磁盘可以擦除磁盘</p>
+<p>在File Systems中挂载磁盘，之后才能使用<br>当然，你有RAID可以使用RAID的管理器</p>
+<p><strong>先说Diagnostics和information：</strong></p>
+<p>Diagnostics就是显示系统的一些运行日志，运行的状态，系统信息，服务信息状态的。</p>
+<p>information就是“关于”（可以看看QQ和微信的“关于”）</p>
+<p><strong>Services：</strong></p>
+<p>这里就是NAS支持的服务了，有很多</p>
+<p>自己看吧</p>
+<p>Apple Filing没有mac，用不了时光机</p>
+<p>FTP，通过ftp协议进行传输的一种文件协议。基于这种协议的文件服务器。顾名思义，传输文件。实时文件共享，双向传输。权限划分</p>
+<p>NFS，树莓派就是一个文件服务器，很多设备可以访问树莓派拿到数据。这也就是解决我的家里很多PC和Laptop之间传输文件的解决方案</p>
+<p>SMB：这个是微软和因特尔共同推出的文件共享协议，不知道大家用没用过windows上面的文件共享，两天电脑之间拷贝文件不需要u盘只需要文件共享和同一个局域网下就可以拷贝文件了。用这个协议也可以实现我要完成的功能，但是这个会话的建立要双方，所以必须请求机器和目标机器同时在线，所以就算了吧</p>
+<p>ssh：不要问我</p>
+<p>媒体服务器media server（PlexMediaServer）：</p>
+<p>超级简单的安装，不需要shell，一键安装。</p>
+<p>拓展里打开</p>
+<p>plugin里面找到安装</p>
+<p>先看看 PlexMediaServer 原理</p>
+<p>懂了吗</p>
+<p>一部电影，一首歌曲，多个设备，连续播放</p>
+<p>里面就是通过注册一个账号之后一步一步设置，没什么可截图的。</p>
+<p>注意，如果要开启外网访问要用到内网穿透</p>
+<p>我这里通过ftp方式添加媒体</p>
+<p>把媒体拖到自己的媒体文件夹</p>
+<p>在plex中添加自己的媒体文件夹</p>
+<p>我这里就演示下多端同步</p>
+<p>有些人说你这还要先下载，之后拖到相应文件夹，麻不麻烦。</p>
+<p>下载的步骤可以用OMV提供的下载插件，拖到相应的文件夹完全可以用shell编程解决。有些人还要说我手机一个APP什么的，直接联网看。我只能说完全不一样的东西你非要杠我也没办法。</p>
+<p>最方便的应该就是照片的查看</p>
+<p><strong>总结</strong>：</p>
+<p>好吧，本来要介绍下OVM系统。但是仅仅是写这一篇博客的话总感觉是一次实验而已。树莓派做NAS真的就仅仅是玩具。所以最后决定还是老老实实准备购置一套1000以内的散件，自己组一台正真的NAS！</p>
+
+  </div>
+</article>
+
+
+    <br />
+    <div id="vcomments"></div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&text=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&is_video=false&description=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=树莓派的又一次折腾-搭建家用NAS&body=Check out this article: https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&title=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&name=树莓派的又一次折腾-搭建家用NAS&description=&lt;p&gt;NAS-网络附属存储，就是把服务和存储分离开来，分别实现。说到这个，为什么搭建NAS呢，先说下家里的电子设备的环境，4台电脑，两个笔记本两个台式。之间传输资源数据都是靠移动硬盘什么的，自己的网盘seafile。很不方便。而且家里的媒体服务器没有，现在投屏看一看视频或者是一遍看视频一遍下载文件这样的形成了一种带宽的两极化，用的时候几乎占满带宽，不用的时候根本不占带宽。算是一种资源的浪费，也就让我萌生了自建NAS的想法。&lt;/p&gt;
+&lt;p&gt;话不多说，现在就开始。  &lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://mimonarchrd.gitee.io/2019/08/07/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E5%8F%88%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE-%E6%90%AD%E5%BB%BA%E5%AE%B6%E7%94%A8NAS/&t=树莓派的又一次折腾-搭建家用NAS"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021-2023
+    [object Object]
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+ 
+    <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" crossorigin="anonymous"></script> 
+  
+
+  <script type="text/javascript">
+      new Valine({
+        el: '#vcomments',
+        appId: '16RIoAUdMwdJKhah8eqwpG8e-gzGzoHsz',
+        appKey: 'rjY2FM4qe5PGNokVnDjN7TVk',
+
+        emojiCDN: '//static.xiaoblogs.cn/emoji/',
+        emojiMaps: {
+          '七海_哭哭': '七海_哭哭.png', 
+          '七海_害怕': '七海_害怕.png',
+          '七海_尴尬': '七海_尴尬.png',
+          '七海_惊讶': '七海_惊讶.png',
+          '七海_捏捏': '七海_捏捏.png', 
+          '七海_柠檬': '七海_柠檬.png', 
+          '七海_比心': '七海_比心.png', 
+          '七海_沉了': '七海_沉了.png', 
+          '七海_生闷气': '七海_生闷气.png',
+          '七海_贴贴': '七海_贴贴.png',
+          '七濑胡桃_乖巧': '七濑胡桃_乖巧.png', 
+          '七濑胡桃_元气满满': '七濑胡桃_元气满满.png',
+          '七濑胡桃_吧唧吧唧': '七濑胡桃_吧唧吧唧.png',
+          '七濑胡桃_噗': '七濑胡桃_噗.png', 
+          '七濑胡桃_好饿': '七濑胡桃_好饿.png',
+          '七濑胡桃_委屈': '七濑胡桃_委屈.png', 
+          '七濑胡桃_宅在家': '七濑胡桃_宅在家.png',
+          '七濑胡桃_我来了！': '七濑胡桃_我来了！.png',
+          '七濑胡桃_我超可爱': '七濑胡桃_我超可爱.png', 
+          '七濑胡桃_有意思': '七濑胡桃_有意思.png',
+          '七濑胡桃_泪目': '七濑胡桃_泪目.png', 
+          '七濑胡桃_熬夜': '七濑胡桃_熬夜.png',
+          '七濑胡桃_生气': '七濑胡桃_生气.png', 
+          '七濑胡桃_紧张': '七濑胡桃_紧张.png',
+          '七濑胡桃_缜密分析': '七濑胡桃_缜密分析.png', 
+          '中国绊爱2nd_AWSL': '中国绊爱2nd_AWSL.png', 
+          '中国绊爱2nd_GKD': '中国绊爱2nd_GKD.png', 
+          '中国绊爱2nd_YYDS': '中国绊爱2nd_YYDS.png', 
+          '中国绊爱2nd_不': '中国绊爱2nd_不.png', 
+          '中国绊爱2nd_哭了': '中国绊爱2nd_哭了.png',
+          '中国绊爱2nd_啊这': '中国绊爱2nd_啊这.png', 
+          '中国绊爱2nd_嘿嘿嘿': '中国绊爱2nd_嘿嘿嘿.png',
+          '中国绊爱2nd_噗': '中国绊爱2nd_噗.png', 
+          '中国绊爱2nd_地铁看手机': '中国绊爱2nd_地铁看手机.png', 
+          '中国绊爱2nd_太菜太下饭': '中国绊爱2nd_太菜太下饭.png', 
+          '中国绊爱2nd_夺笋啊': '中国绊爱2nd_夺笋啊.png', 
+          '中国绊爱2nd_害怕': '中国绊爱2nd_害怕.png', 
+          '中国绊爱2nd_快逃': '中国绊爱2nd_快逃.png', 
+          '中国绊爱2nd_我觉得OK': '中国绊爱2nd_我觉得OK.png', 
+          '中国绊爱2nd_握草': '中国绊爱2nd_握草.png', 
+          '中国绊爱2nd_有排面': '中国绊爱2nd_有排面.png', 
+          '中国绊爱2nd_狗头': '中国绊爱2nd_狗头.png', 
+          '中国绊爱2nd_生气气': '中国绊爱2nd_生气气.png', 
+          '中国绊爱2nd_知识增加了': '中国绊爱2nd_知识增加了.png', 
+          '中国绊爱2nd_芜湖': '中国绊爱2nd_芜湖.png', 
+          '嘉然_biu': '嘉然_biu.png', 
+          '嘉然_mua': '嘉然_mua.png', 
+          '嘉然_一眼真': '嘉然_一眼真.png', 
+          '嘉然_一米八': '嘉然_一米八.png', 
+          '嘉然_你好': '嘉然_你好.png', 
+          '嘉然_剪刀手': '嘉然_剪刀手.png', 
+          '嘉然_吓人': '嘉然_吓人.png', 
+          '嘉然_嘉人们': '嘉然_嘉人们.png', 
+          '嘉然_嘉油': '嘉然_嘉油.png', 
+          '嘉然_嘉速心动': '嘉然_嘉速心动.png', 
+          '嘉然_安详': '嘉然_安详.png', 
+          '嘉然_敲打': '嘉然_敲打.png', 
+          '嘉然_暗中观察': '嘉然_暗中观察.png', 
+          '嘉然_流口水': '嘉然_流口水.png', 
+          '嘉然_点赞': '嘉然_点赞.png', 
+          '嘉然_略略略': '嘉然_略略略.png', 
+          '嘉然_番茄炒蛋拳': '嘉然_番茄炒蛋拳.png', 
+          '嘉然_笔芯': '嘉然_笔芯.png', 
+          '嘉然_绷不住了': '嘉然_绷不住了.png', 
+          '嘉然_锤头丧气': '嘉然_锤头丧气.png', 
+          '小希小桃_ai有力量': '小希小桃_ai有力量.png', 
+          '小希小桃_mua': '小希小桃_mua.png', 
+          '小希小桃_变成河豚': '小希小桃_变成河豚.png', 
+          '小希小桃_呆丝ki': '小希小桃_呆丝ki.png', 
+          '小希小桃_土土土': '小希小桃_土土土.png', 
+          '小希小桃_委屈': '小希小桃_委屈.png', 
+          '小希小桃_孜然一身': '小希小桃_孜然一身.png', 
+          '小希小桃_对不起': '小希小桃_对不起.png', 
+          '小希小桃_得意': '小希小桃_得意.png', 
+          '小希小桃_想peach': '小希小桃_想peach.png', 
+          '小希小桃_桃桃我悟了': '小希小桃_桃桃我悟了.png', 
+          '小希小桃_比心': '小希小桃_比心.png', 
+          '小希小桃_给你一斧': '小希小桃_给你一斧.png', 
+          '小希小桃_绝望': '小希小桃_绝望.png', 
+          '小希小桃_茶茶': '小希小桃_茶茶.png', 
+          '小希小桃_蚌埠住了': '小希小桃_蚌埠住了.png', 
+          '小希小桃_被气晕': '小希小桃_被气晕.png', 
+          '小希小桃_这样那样': '小希小桃_这样那样.png', 
+          '小希小桃_震惊': '小希小桃_震惊.png', 
+          '小希小桃_？？？': '小希小桃_？？？.png', 
+          '泠鸢yousa_awsl': '泠鸢yousa_awsl.png', 
+          '泠鸢yousa_加大力度': '泠鸢yousa_加大力度.png', 
+          '泠鸢yousa_大哭': '泠鸢yousa_大哭.png', 
+          '泠鸢yousa_头晕': '泠鸢yousa_头晕.png', 
+          '泠鸢yousa_好人卡': '泠鸢yousa_好人卡.png', 
+          '泠鸢yousa_干杯': '泠鸢yousa_干杯.png', 
+          '泠鸢yousa_惊讶': '泠鸢yousa_惊讶.png', 
+          '泠鸢yousa_打call': '泠鸢yousa_打call.png', 
+          '泠鸢yousa_沉默': '泠鸢yousa_沉默.png', 
+          '泠鸢yousa_滑稽': '泠鸢yousa_滑稽.png', 
+          '泠鸢yousa_生气': '泠鸢yousa_生气.png', 
+          '泠鸢yousa_真棒': '泠鸢yousa_真棒.png', 
+          '泠鸢yousa_请吃桃': '泠鸢yousa_请吃桃.png', 
+          '泠鸢yousa_贴贴': '泠鸢yousa_贴贴.png', 
+          '泠鸢yousa_问号': '泠鸢yousa_问号.png', 
+          '白神遥_5835': '白神遥_5835.png', 
+          '白神遥_kusa': '白神遥_kusa.png', 
+          '白神遥_加油': '白神遥_加油.png', 
+          '白神遥_吃惊': '白神遥_吃惊.png', 
+          '白神遥_吃桃子': '白神遥_吃桃子.png', 
+          '白神遥_吃瓜': '白神遥_吃瓜.png', 
+          '白神遥_呆呆': '白神遥_呆呆.png', 
+          '白神遥_哭哭': '白神遥_哭哭.png', 
+          '白神遥_好耶': '白神遥_好耶.png', 
+          '白神遥_晚安': '白神遥_晚安.png', 
+          '白神遥_柠檬': '白神遥_柠檬.png', 
+          '白神遥_滑稽': '白神遥_滑稽.png', 
+          '白神遥_点赞': '白神遥_点赞.png', 
+          '白神遥_让我康康': '白神遥_让我康康.png', 
+          '白神遥_豹怒': '白神遥_豹怒.png', 
+          '白神遥_豹笑': '白神遥_豹笑.png', 
+          '白神遥_跳脸': '白神遥_跳脸.png', 
+          '白神遥_问号': '白神遥_问号.png', 
+          '白神遥_阿巴阿巴': '白神遥_阿巴阿巴.png', 
+          '白神遥_骄傲': '白神遥_骄傲.png', 
+          '阿梓_不怕困难': '阿梓_不怕困难.png', 
+          '阿梓_别走好吗': '阿梓_别走好吗.png', 
+          '阿梓_可爱捏': '阿梓_可爱捏.png', 
+          '阿梓_吹溜溜笛': '阿梓_吹溜溜笛.png', 
+          '阿梓_咋回事捏': '阿梓_咋回事捏.png', 
+          '阿梓_哭哭': '阿梓_哭哭.png', 
+          '阿梓_大家好呀': '阿梓_大家好呀.png', 
+          '阿梓_太破费了': '阿梓_太破费了.png', 
+          '阿梓_安静一下': '阿梓_安静一下.png', 
+          '阿梓_就这？': '阿梓_就这？.png', 
+          '阿梓_忍者修行': '阿梓_忍者修行.png', 
+          '阿梓_恰饱饱': '阿梓_恰饱饱.png', 
+          '阿梓_我是楞啊': '阿梓_我是楞啊.png', 
+          '阿梓_我晒吗': '阿梓_我晒吗.png', 
+          '阿梓_拳头硬了': '阿梓_拳头硬了.png', 
+          '阿梓_拿个快递': '阿梓_拿个快递.png', 
+          '阿梓_歪歪歪': '阿梓_歪歪歪.png', 
+          '阿梓_真接受不了': '阿梓_真接受不了.png', 
+          '阿梓_真牛蛙': '阿梓_真牛蛙.png', 
+          '阿梓_谢谢你呀': '阿梓_谢谢你呀.png'
+      }
+    })
+  </script>
+
+</body>
+</html>

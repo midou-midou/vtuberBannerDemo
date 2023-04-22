@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="ref 属性引用，和 react 的 ref 差不多，都是为了避免原生的 DOM 操作，给子组件注册引用信息。普通的 html 标签上的ref指向的是这个 DOM 元素，普通的组件的ref属性指向的这个组件的实例对象 123&lt;h1 v-text&#x3D;&quot;msg&quot; ref&#x3D;&quot;title&quot;&gt;&lt;&#x2F;h1&gt;&lt;button ref&#x3D;&quot;b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ref、props、mixin、插件、scoped">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/index.html">
+<meta property="og:site_name" content="集合">
+<meta property="og:description" content="ref 属性引用，和 react 的 ref 差不多，都是为了避免原生的 DOM 操作，给子组件注册引用信息。普通的 html 标签上的ref指向的是这个 DOM 元素，普通的组件的ref属性指向的这个组件的实例对象 123&lt;h1 v-text&#x3D;&quot;msg&quot; ref&#x3D;&quot;title&quot;&gt;&lt;&#x2F;h1&gt;&lt;button ref&#x3D;&quot;b">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-26T12:27:01.000Z">
+<meta property="article:modified_time" content="2022-10-10T08:43:34.276Z">
+<meta property="article:author" content="[object Object]">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.ico" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+        
+      
+    
+    <!-- title -->
+    <title>ref、props、mixin、插件、scoped</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+    <!-- 百度统计 -->
+    
+      <script src="https://hm.baidu.com/hm.js?1baad79f3aa5081fc9ff11dc24c8a93a"></script>
+    
+    <!-- mathjax -->
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/css/vBanner.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="集合" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2022/08/02/Nuxt/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/11/21/react%E7%9B%B4%E6%92%AD%E9%97%B4%E7%9A%84%E5%BC%80%E5%8F%91/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&text=ref、props、mixin、插件、scoped"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&is_video=false&description=ref、props、mixin、插件、scoped"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ref、props、mixin、插件、scoped&body=Check out this article: https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&name=ref、props、mixin、插件、scoped&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&t=ref、props、mixin、插件、scoped"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ref-%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">ref 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#props-%E5%B1%9E%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">props 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mixin-%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">mixin 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">插件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">5.1.</span> <span class="toc-text">使用方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scoped"><span class="toc-number">6.</span> <span class="toc-text">scoped</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    
+    <div id="vBanner_Root">
+        <div id="vBanner_Container" style="background-image: linear-gradient(to bottom right, white , #FDC888)">
+            <a target="_blank" rel="noopener" href="https://www.pixiv.net/artworks/88263776">
+                
+                    <div id="vBanner_post" title="艾露露Ailurus" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/88263776_p01.png)"></div>
+                
+            </a>
+            <div id="vLogo_Container">
+                 
+                            
+                        <div id="vBanner_logo" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/%E8%89%BE%E9%9C%B2%E9%9C%B2%EF%BC%88logo%EF%BC%89.png)"></div>
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        ref、props、mixin、插件、scoped
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">[object Object]</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-26T12:27:01.000Z" itemprop="datePublished">2022-05-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="ref-属性"><a href="#ref-属性" class="headerlink" title="ref 属性"></a>ref 属性</h3><p>引用，和 react 的 ref 差不多，都是为了避免原生的 DOM 操作，给子组件注册引用信息。<br>普通的 html 标签上的<code>ref</code>指向的是这个 DOM 元素，普通的组件的<code>ref</code>属性指向的这个组件的实例对象</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">v-text</span>=<span class="string">&quot;msg&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;title&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ref</span>=<span class="string">&quot;btn&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;showDOM&quot;</span>&gt;</span>点我输出上方的DOM元素<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">School</span> <span class="attr">ref</span>=<span class="string">&quot;sch&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;App&quot;</span>,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">showDOM</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">title</span>); <span class="comment">//真实DOM元素</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">btn</span>); <span class="comment">//真实DOM元素</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">sch</span>); <span class="comment">//School组件的实例对象（vc）</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="props-属性"><a href="#props-属性" class="headerlink" title="props 属性"></a>props 属性</h3><p>类似 react 的 props 属性，都是接受父组件传递的值。接收的方式有下面的三种</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//简单声明接收</span></span><br><span class="line"><span class="attr">props</span>:[<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;age&#x27;</span>,<span class="string">&#x27;sex&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">//接收的同时对数据进行类型限制</span></span><br><span class="line"><span class="attr">props</span>:&#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">age</span>:<span class="title class_">Number</span>,</span><br><span class="line">      <span class="attr">sex</span>:<span class="title class_">String</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//接收的同时对数据：进行类型限制+默认值的指定+必要性的限制</span></span><br><span class="line"><span class="attr">props</span>:&#123;</span><br><span class="line">  <span class="attr">name</span>:&#123;</span><br><span class="line">    <span class="attr">type</span>:<span class="title class_">String</span>, <span class="comment">//name的类型是字符串</span></span><br><span class="line">      <span class="attr">required</span>:<span class="literal">true</span>, <span class="comment">//name是必要的</span></span><br><span class="line">  &#125;,</span><br><span class="line">    <span class="attr">age</span>:&#123;</span><br><span class="line">      <span class="attr">type</span>:<span class="title class_">Number</span>,</span><br><span class="line">        <span class="attr">default</span>:<span class="number">99</span> <span class="comment">//默认值</span></span><br><span class="line">    &#125;,</span><br><span class="line">      <span class="attr">sex</span>:&#123;</span><br><span class="line">        <span class="attr">type</span>:<span class="title class_">String</span>,</span><br><span class="line">          <span class="attr">required</span>:<span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是，传入子组件的 prop 属性，都是直接放到了子组件的身上，但是没有放到<code>_data</code>下。可以直接使用<code>this.xx</code>来使用。react 中是放到了组件的 props 属性下，使用的时候要<code>this.props.xxx</code></p>
+<h3 id="mixin-属性"><a href="#mixin-属性" class="headerlink" title="mixin 属性"></a>mixin 属性</h3><p>混合属性，来分发 Vue 组件中的可复用功能。一个混入对象可以包含任意组件选项</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个混入对象</span></span><br><span class="line"><span class="keyword">var</span> myMixin = &#123;</span><br><span class="line">  <span class="attr">created</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">hello</span>();</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="attr">hello</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello from mixin!&quot;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个使用混入对象的组件</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Component</span> = <span class="title class_">Vue</span>.<span class="title function_">extend</span>(&#123;</span><br><span class="line">  <span class="attr">mixins</span>: [myMixin],</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> component = <span class="keyword">new</span> <span class="title class_">Component</span>(); <span class="comment">// =&gt; &quot;hello from mixin!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果混入对象中的配置对象和组件本身的属性重名了，那么先使用组件身上的配置对象<br>但是，如果混入对象上配置的是生命周期，那么组件的生命周期和混入对象配置的生命周期都会执行</p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>通常用来为 Vue 添加全局功能（增强功能）<br>比如可以在插件中添加一个<code>mixin</code>混入，里面配置一个<code>data</code>下面有<code>abc</code>。这样，vue 中的每一个组件都有了这个<code>abc</code>属性<br>再比如，可以添加一个过滤属性，里面做一些数据的操作，比如<code>a+b</code>。这样所有的 vue 组件都可以使用这个过滤器了</p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用 `MyPlugin.install(Vue)` 要在new Vue()之前使用</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">MyPlugin</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="comment">// ...组件选项</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>插件的定义：<br>插件必须要实现<code>install</code>方法，默认接收两个参数，第一个方法就是<code>Vue</code>构造器，第二个参数是一个可选择的对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">install</span>(<span class="params">Vue, options</span>) &#123;</span><br><span class="line">    <span class="comment">//定义混入</span></span><br><span class="line">    <span class="title class_">Vue</span>.<span class="title function_">mixin</span>(&#123;</span><br><span class="line">      <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          <span class="attr">option</span>: &#123; <span class="attr">a</span>: <span class="number">100</span>, <span class="attr">b</span>: <span class="number">200</span> &#125;,</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//给Vue原型上添加一个方法,vm(vue实例对象)和vc(vuecomponent实例对象)就都能用了</span></span><br><span class="line">    <span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">hello</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">alert</span>(<span class="string">&quot;你好啊&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="scoped"><a href="#scoped" class="headerlink" title="scoped"></a>scoped</h3><p>可以限定住组件的样式范围，让其仅在当前组件中生效 (写样式很常用)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+    <br />
+    <div id="vcomments"></div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ref-%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">ref 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#props-%E5%B1%9E%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">props 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mixin-%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">mixin 属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">插件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">5.1.</span> <span class="toc-text">使用方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scoped"><span class="toc-number">6.</span> <span class="toc-text">scoped</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&text=ref、props、mixin、插件、scoped"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&is_video=false&description=ref、props、mixin、插件、scoped"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ref、props、mixin、插件、scoped&body=Check out this article: https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&title=ref、props、mixin、插件、scoped"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&name=ref、props、mixin、插件、scoped&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://mimonarchrd.gitee.io/2022/05/26/ref%E3%80%81props%E3%80%81mixin%E3%80%81%E6%8F%92%E4%BB%B6%E3%80%81scoped/&t=ref、props、mixin、插件、scoped"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021-2023
+    [object Object]
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+ 
+    <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" crossorigin="anonymous"></script> 
+  
+
+  <script type="text/javascript">
+      new Valine({
+        el: '#vcomments',
+        appId: '16RIoAUdMwdJKhah8eqwpG8e-gzGzoHsz',
+        appKey: 'rjY2FM4qe5PGNokVnDjN7TVk',
+
+        emojiCDN: '//static.xiaoblogs.cn/emoji/',
+        emojiMaps: {
+          '七海_哭哭': '七海_哭哭.png', 
+          '七海_害怕': '七海_害怕.png',
+          '七海_尴尬': '七海_尴尬.png',
+          '七海_惊讶': '七海_惊讶.png',
+          '七海_捏捏': '七海_捏捏.png', 
+          '七海_柠檬': '七海_柠檬.png', 
+          '七海_比心': '七海_比心.png', 
+          '七海_沉了': '七海_沉了.png', 
+          '七海_生闷气': '七海_生闷气.png',
+          '七海_贴贴': '七海_贴贴.png',
+          '七濑胡桃_乖巧': '七濑胡桃_乖巧.png', 
+          '七濑胡桃_元气满满': '七濑胡桃_元气满满.png',
+          '七濑胡桃_吧唧吧唧': '七濑胡桃_吧唧吧唧.png',
+          '七濑胡桃_噗': '七濑胡桃_噗.png', 
+          '七濑胡桃_好饿': '七濑胡桃_好饿.png',
+          '七濑胡桃_委屈': '七濑胡桃_委屈.png', 
+          '七濑胡桃_宅在家': '七濑胡桃_宅在家.png',
+          '七濑胡桃_我来了！': '七濑胡桃_我来了！.png',
+          '七濑胡桃_我超可爱': '七濑胡桃_我超可爱.png', 
+          '七濑胡桃_有意思': '七濑胡桃_有意思.png',
+          '七濑胡桃_泪目': '七濑胡桃_泪目.png', 
+          '七濑胡桃_熬夜': '七濑胡桃_熬夜.png',
+          '七濑胡桃_生气': '七濑胡桃_生气.png', 
+          '七濑胡桃_紧张': '七濑胡桃_紧张.png',
+          '七濑胡桃_缜密分析': '七濑胡桃_缜密分析.png', 
+          '中国绊爱2nd_AWSL': '中国绊爱2nd_AWSL.png', 
+          '中国绊爱2nd_GKD': '中国绊爱2nd_GKD.png', 
+          '中国绊爱2nd_YYDS': '中国绊爱2nd_YYDS.png', 
+          '中国绊爱2nd_不': '中国绊爱2nd_不.png', 
+          '中国绊爱2nd_哭了': '中国绊爱2nd_哭了.png',
+          '中国绊爱2nd_啊这': '中国绊爱2nd_啊这.png', 
+          '中国绊爱2nd_嘿嘿嘿': '中国绊爱2nd_嘿嘿嘿.png',
+          '中国绊爱2nd_噗': '中国绊爱2nd_噗.png', 
+          '中国绊爱2nd_地铁看手机': '中国绊爱2nd_地铁看手机.png', 
+          '中国绊爱2nd_太菜太下饭': '中国绊爱2nd_太菜太下饭.png', 
+          '中国绊爱2nd_夺笋啊': '中国绊爱2nd_夺笋啊.png', 
+          '中国绊爱2nd_害怕': '中国绊爱2nd_害怕.png', 
+          '中国绊爱2nd_快逃': '中国绊爱2nd_快逃.png', 
+          '中国绊爱2nd_我觉得OK': '中国绊爱2nd_我觉得OK.png', 
+          '中国绊爱2nd_握草': '中国绊爱2nd_握草.png', 
+          '中国绊爱2nd_有排面': '中国绊爱2nd_有排面.png', 
+          '中国绊爱2nd_狗头': '中国绊爱2nd_狗头.png', 
+          '中国绊爱2nd_生气气': '中国绊爱2nd_生气气.png', 
+          '中国绊爱2nd_知识增加了': '中国绊爱2nd_知识增加了.png', 
+          '中国绊爱2nd_芜湖': '中国绊爱2nd_芜湖.png', 
+          '嘉然_biu': '嘉然_biu.png', 
+          '嘉然_mua': '嘉然_mua.png', 
+          '嘉然_一眼真': '嘉然_一眼真.png', 
+          '嘉然_一米八': '嘉然_一米八.png', 
+          '嘉然_你好': '嘉然_你好.png', 
+          '嘉然_剪刀手': '嘉然_剪刀手.png', 
+          '嘉然_吓人': '嘉然_吓人.png', 
+          '嘉然_嘉人们': '嘉然_嘉人们.png', 
+          '嘉然_嘉油': '嘉然_嘉油.png', 
+          '嘉然_嘉速心动': '嘉然_嘉速心动.png', 
+          '嘉然_安详': '嘉然_安详.png', 
+          '嘉然_敲打': '嘉然_敲打.png', 
+          '嘉然_暗中观察': '嘉然_暗中观察.png', 
+          '嘉然_流口水': '嘉然_流口水.png', 
+          '嘉然_点赞': '嘉然_点赞.png', 
+          '嘉然_略略略': '嘉然_略略略.png', 
+          '嘉然_番茄炒蛋拳': '嘉然_番茄炒蛋拳.png', 
+          '嘉然_笔芯': '嘉然_笔芯.png', 
+          '嘉然_绷不住了': '嘉然_绷不住了.png', 
+          '嘉然_锤头丧气': '嘉然_锤头丧气.png', 
+          '小希小桃_ai有力量': '小希小桃_ai有力量.png', 
+          '小希小桃_mua': '小希小桃_mua.png', 
+          '小希小桃_变成河豚': '小希小桃_变成河豚.png', 
+          '小希小桃_呆丝ki': '小希小桃_呆丝ki.png', 
+          '小希小桃_土土土': '小希小桃_土土土.png', 
+          '小希小桃_委屈': '小希小桃_委屈.png', 
+          '小希小桃_孜然一身': '小希小桃_孜然一身.png', 
+          '小希小桃_对不起': '小希小桃_对不起.png', 
+          '小希小桃_得意': '小希小桃_得意.png', 
+          '小希小桃_想peach': '小希小桃_想peach.png', 
+          '小希小桃_桃桃我悟了': '小希小桃_桃桃我悟了.png', 
+          '小希小桃_比心': '小希小桃_比心.png', 
+          '小希小桃_给你一斧': '小希小桃_给你一斧.png', 
+          '小希小桃_绝望': '小希小桃_绝望.png', 
+          '小希小桃_茶茶': '小希小桃_茶茶.png', 
+          '小希小桃_蚌埠住了': '小希小桃_蚌埠住了.png', 
+          '小希小桃_被气晕': '小希小桃_被气晕.png', 
+          '小希小桃_这样那样': '小希小桃_这样那样.png', 
+          '小希小桃_震惊': '小希小桃_震惊.png', 
+          '小希小桃_？？？': '小希小桃_？？？.png', 
+          '泠鸢yousa_awsl': '泠鸢yousa_awsl.png', 
+          '泠鸢yousa_加大力度': '泠鸢yousa_加大力度.png', 
+          '泠鸢yousa_大哭': '泠鸢yousa_大哭.png', 
+          '泠鸢yousa_头晕': '泠鸢yousa_头晕.png', 
+          '泠鸢yousa_好人卡': '泠鸢yousa_好人卡.png', 
+          '泠鸢yousa_干杯': '泠鸢yousa_干杯.png', 
+          '泠鸢yousa_惊讶': '泠鸢yousa_惊讶.png', 
+          '泠鸢yousa_打call': '泠鸢yousa_打call.png', 
+          '泠鸢yousa_沉默': '泠鸢yousa_沉默.png', 
+          '泠鸢yousa_滑稽': '泠鸢yousa_滑稽.png', 
+          '泠鸢yousa_生气': '泠鸢yousa_生气.png', 
+          '泠鸢yousa_真棒': '泠鸢yousa_真棒.png', 
+          '泠鸢yousa_请吃桃': '泠鸢yousa_请吃桃.png', 
+          '泠鸢yousa_贴贴': '泠鸢yousa_贴贴.png', 
+          '泠鸢yousa_问号': '泠鸢yousa_问号.png', 
+          '白神遥_5835': '白神遥_5835.png', 
+          '白神遥_kusa': '白神遥_kusa.png', 
+          '白神遥_加油': '白神遥_加油.png', 
+          '白神遥_吃惊': '白神遥_吃惊.png', 
+          '白神遥_吃桃子': '白神遥_吃桃子.png', 
+          '白神遥_吃瓜': '白神遥_吃瓜.png', 
+          '白神遥_呆呆': '白神遥_呆呆.png', 
+          '白神遥_哭哭': '白神遥_哭哭.png', 
+          '白神遥_好耶': '白神遥_好耶.png', 
+          '白神遥_晚安': '白神遥_晚安.png', 
+          '白神遥_柠檬': '白神遥_柠檬.png', 
+          '白神遥_滑稽': '白神遥_滑稽.png', 
+          '白神遥_点赞': '白神遥_点赞.png', 
+          '白神遥_让我康康': '白神遥_让我康康.png', 
+          '白神遥_豹怒': '白神遥_豹怒.png', 
+          '白神遥_豹笑': '白神遥_豹笑.png', 
+          '白神遥_跳脸': '白神遥_跳脸.png', 
+          '白神遥_问号': '白神遥_问号.png', 
+          '白神遥_阿巴阿巴': '白神遥_阿巴阿巴.png', 
+          '白神遥_骄傲': '白神遥_骄傲.png', 
+          '阿梓_不怕困难': '阿梓_不怕困难.png', 
+          '阿梓_别走好吗': '阿梓_别走好吗.png', 
+          '阿梓_可爱捏': '阿梓_可爱捏.png', 
+          '阿梓_吹溜溜笛': '阿梓_吹溜溜笛.png', 
+          '阿梓_咋回事捏': '阿梓_咋回事捏.png', 
+          '阿梓_哭哭': '阿梓_哭哭.png', 
+          '阿梓_大家好呀': '阿梓_大家好呀.png', 
+          '阿梓_太破费了': '阿梓_太破费了.png', 
+          '阿梓_安静一下': '阿梓_安静一下.png', 
+          '阿梓_就这？': '阿梓_就这？.png', 
+          '阿梓_忍者修行': '阿梓_忍者修行.png', 
+          '阿梓_恰饱饱': '阿梓_恰饱饱.png', 
+          '阿梓_我是楞啊': '阿梓_我是楞啊.png', 
+          '阿梓_我晒吗': '阿梓_我晒吗.png', 
+          '阿梓_拳头硬了': '阿梓_拳头硬了.png', 
+          '阿梓_拿个快递': '阿梓_拿个快递.png', 
+          '阿梓_歪歪歪': '阿梓_歪歪歪.png', 
+          '阿梓_真接受不了': '阿梓_真接受不了.png', 
+          '阿梓_真牛蛙': '阿梓_真牛蛙.png', 
+          '阿梓_谢谢你呀': '阿梓_谢谢你呀.png'
+      }
+    })
+  </script>
+
+</body>
+</html>
