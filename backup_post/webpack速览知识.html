@@ -6,18 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="学习 生活 感想">
+    <meta name="description" content="1. webpack是什么 按照官方的定义：webpack是一种静态资源的打包器。比如说有两个模块都通过CJS或者是ESM引入了一些js库，通过webpack就可以将引入的这些js库打包到bundle中去。再比如，要通过require的方式引入一个非js的文件，也可以通过webpack来转换为可以让其直接引用的模块">
 <meta property="og:type" content="website">
-<meta property="og:title" content="friends">
-<meta property="og:url" content="https://mimonarchrd.gitee.io/friends/index.html">
+<meta property="og:title" content="webpack速览知识">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/backup_post/webpack%E9%80%9F%E8%A7%88%E7%9F%A5%E8%AF%86.html">
 <meta property="og:site_name" content="集合">
-<meta property="og:description" content="学习 生活 感想">
+<meta property="og:description" content="1. webpack是什么 按照官方的定义：webpack是一种静态资源的打包器。比如说有两个模块都通过CJS或者是ESM引入了一些js库，通过webpack就可以将引入的这些js库打包到bundle中去。再比如，要通过require的方式引入一个非js的文件，也可以通过webpack来转换为可以让其直接引用的模块">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-01T02:59:16.000Z">
-<meta property="article:modified_time" content="2021-08-17T23:28:34.000Z">
+<meta property="og:image" content="https://static.xiaoblogs.cn/img/20210708121523.png">
+<meta property="og:image" content="https://static.xiaoblogs.cn/img/20210709040442.png">
+<meta property="article:published_time" content="2021-07-08T15:24:00.000Z">
+<meta property="article:modified_time" content="2022-04-30T03:15:12.922Z">
 <meta property="article:author" content="[object Object]">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.xiaoblogs.cn/img/20210708121523.png">
     
     
       
@@ -37,7 +40,7 @@
       
     
     <!-- title -->
-    <title>friends</title>
+    <title>webpack速览知识</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -111,7 +114,31 @@
 
   <div class="content" itemprop="articleBody">
       
-          
+          <h2 id="1-webpack是什么"><a href="#1-webpack是什么" class="headerlink" title="1. webpack是什么"></a>1. webpack是什么</h2><p> 按照官方的定义：webpack是一种静态资源的打包器。比如说有两个模块都通过CJS或者是ESM引入了一些js库，通过webpack就可以将引入的这些js库打包到bundle中去。再比如，要通过require的方式引入一个非js的文件，也可以通过webpack来转换为可以让其直接引用的模块</p>
+<span id="more"></span>
+<p><img src="https://static.xiaoblogs.cn/img/20210708121523.png"></p>
+<h2 id="2-webpack中的入口input、出口output、loader、plugin各个都是些什么"><a href="#2-webpack中的入口input、出口output、loader、plugin各个都是些什么" class="headerlink" title="2. webpack中的入口input、出口output、loader、plugin各个都是些什么"></a>2. webpack中的入口input、出口output、loader、plugin各个都是些什么</h2><ul>
+<li>  入口input：webpack构建模块依赖图的起点，webpack会从这里开始打包模块需要的静态资源文件</li>
+<li>  出口output：webpack打包后的bundle的输出位置和名字</li>
+<li>  loader：能让webpack处理各种各样的文件的工具或者说是模块，比如React的JSX，就需要一个react-loader来进行处理</li>
+<li>  plugin：拓展webpack的一些插件，常用的会紧接着补充</li>
+</ul>
+<h2 id="3-webpack中的loader"><a href="#3-webpack中的loader" class="headerlink" title="3. webpack中的loader"></a>3. webpack中的loader</h2><p> loader可以让webpack打包各种各样的文件，img，ttf，css，jsx等等。在使用这些资源的时候可以直接的import到相应的模块中去。在官方文档中将一个文件引入另一个文件这种关系称之为依赖关系。webpack可以自动的生成一张各种文件之间依赖关系的图（依赖图）</p>
+<hr>
+<p>首先，我创建了一个项目</p>
+<p><img src="https://static.xiaoblogs.cn/img/20210709040442.png"></p>
+<p>只要关心<code>app</code>文件夹和<code>public</code>文件夹以及<code>webpack.config.js</code>文件</p>
+<p>app文件夹中的entry.js代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> greet <span class="keyword">from</span> <span class="string">&#x27;./greet&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Image</span> <span class="keyword">from</span> <span class="string">&#x27;../res/tetris.png&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">ImageDom</span> = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line"><span class="title class_">ImageDom</span>.<span class="property">src</span> = <span class="title class_">Image</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;container&quot;</span>).<span class="title function_">appendChild</span>(<span class="title function_">greet</span>());</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;container&quot;</span>).<span class="title function_">appendChild</span>(<span class="title class_">ImageDom</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我的目标是直接通过import引入一张图片，图片在res文件夹下。现在就需要fs-loader来完成这个任务了</p>
+<p>在webpack.config.js中要这样配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span>=&#123;</span><br><span class="line">    <span class="attr">entry</span>:__dirname+<span class="string">&quot;/app/entry.js&quot;</span>,   <span class="comment">//入口文件</span></span><br><span class="line">    <span class="attr">output</span>:&#123;                           </span><br><span class="line">        <span class="attr">path</span>:__dirname+<span class="string">&quot;/public&quot;</span>,      <span class="comment">//输出文件的存放位置</span></span><br><span class="line">        <span class="attr">filename</span>:<span class="string">&quot;bundle.js&quot;</span>           <span class="comment">//输出文件的名称</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">module</span>:&#123;</span><br><span class="line">        <span class="attr">rules</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">test</span>: <span class="regexp">/\.(pngsvgjpggif)$/</span>,</span><br><span class="line">            <span class="attr">use</span>: [</span><br><span class="line">                <span class="string">&#x27;file-loader&#x27;</span></span><br><span class="line">                ]</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>module是要使用的webpack模块，rules是对应的*-loader匹配的规则，里面test（条件）可以填写正则表达式，字符串等。use为loader的入口，表示你要用什么loader来处理</p>
+<p>这样就很容易的完成了webpack的配置及简单的使用</p>
+<p>简单的了解解决不了实际情况下的复杂问题，你要问我要不要来点复杂问题的例子，我只能说我的复杂问题不是你的，你的不是我的，要不断实践去解决自己的问题</p>
+
         
   </div>
 </article>

@@ -6,17 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="学习 生活 感想">
+    <meta name="description" content="如果在shell中执行这样的命令输出是什么呢？假设下面命令中的两个文件都存在 1root@ali_server:~# cat file1||cat file2     答案：鼠标移动到下方的黑条处或点击下方黑条即可查看答案    .heimu{ background-color: #252525; color: #252525; text-shadow: none; } .heimu:hover{">
 <meta property="og:type" content="website">
-<meta property="og:title" content="friends">
-<meta property="og:url" content="https://mimonarchrd.gitee.io/friends/index.html">
+<meta property="og:title" content="Linux中的||和&amp;&amp;">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/backup_post/Linux%E4%B8%AD%E7%9A%84%E6%88%96%E5%92%8C%E4%B8%8E.html">
 <meta property="og:site_name" content="集合">
-<meta property="og:description" content="学习 生活 感想">
+<meta property="og:description" content="如果在shell中执行这样的命令输出是什么呢？假设下面命令中的两个文件都存在 1root@ali_server:~# cat file1||cat file2     答案：鼠标移动到下方的黑条处或点击下方黑条即可查看答案    .heimu{ background-color: #252525; color: #252525; text-shadow: none; } .heimu:hover{">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-01T02:59:16.000Z">
-<meta property="article:modified_time" content="2021-08-17T23:28:34.000Z">
+<meta property="article:published_time" content="2020-06-24T17:10:27.000Z">
+<meta property="article:modified_time" content="2021-09-04T13:05:24.000Z">
 <meta property="article:author" content="[object Object]">
 <meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Linux中的命令">
 <meta name="twitter:card" content="summary">
     
     
@@ -37,7 +38,7 @@
       
     
     <!-- title -->
-    <title>friends</title>
+    <title>Linux中的||和&amp;&amp;</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -111,7 +112,27 @@
 
   <div class="content" itemprop="articleBody">
       
-          
+          <h2 id="如果在shell中执行这样的命令输出是什么呢？"><a href="#如果在shell中执行这样的命令输出是什么呢？" class="headerlink" title="如果在shell中执行这样的命令输出是什么呢？"></a>如果在shell中执行这样的命令输出是什么呢？</h2><p>假设下面命令中的两个文件都存在</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ali_server:~<span class="comment"># cat file1||cat file2   </span></span><br></pre></td></tr></table></figure>
+
+<p>答案：鼠标移动到下方的黑条处或点击下方黑条即可查看答案</p>
+<style>
+  .heimu{ background-color: #252525; color: #252525; text-shadow: none; } .heimu:hover{ transition: color .13s linear; color: #fff; }
+</style>
+<div class="heimu">会输出file1的内容</div> 
+<br />
+
+<p>为什么会这样呢？“||”的意思不是或者吗，没错，但是<strong>在Linux中是先执行||前面的命令也就是例子中的cat file1如果执行失败会执行后面的cat file2</strong>，并且都要先执行第一个命令，无论成功或者失败</p>
+<p>cat a成功后就执行第一个cat a<br>a1不存在，但是也会执行这个命令，之后执行后面的cat a</p>
+<p>同样还是file1和file2，如果执行下面的命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@ali_server:~<span class="comment"># cat file1&amp;&amp;cat file2</span></span><br></pre></td></tr></table></figure>
+
+<p>答案：鼠标移动到下方的黑条处或点击下方黑条即可查看答案</p>
+<div class="heimu">会输出file1和file2的内容</div> 
+<br /> 
+
+<p>“&amp;&amp;”代表并且，也就是“都”的意思，所以就是既cat file1又cat file2</p>
+
         
   </div>
 </article>

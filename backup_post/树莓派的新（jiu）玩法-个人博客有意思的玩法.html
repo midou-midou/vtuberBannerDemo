@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="上次我们看过了如何用树莓派搭建wordpress 这一次我们来玩一点不一样的，弄一点树莓派wordpress的进阶的玩法。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="树莓派的新（jiu）玩法-个人博客有意思的玩法">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/backup_post/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84%E6%96%B0%EF%BC%88jiu%EF%BC%89%E7%8E%A9%E6%B3%95-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84%E7%8E%A9%E6%B3%95.html">
+<meta property="og:site_name" content="集合">
+<meta property="og:description" content="上次我们看过了如何用树莓派搭建wordpress 这一次我们来玩一点不一样的，弄一点树莓派wordpress的进阶的玩法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-29T23:24:16.000Z">
+<meta property="article:modified_time" content="2021-09-05T13:31:48.000Z">
+<meta property="article:author" content="[object Object]">
+<meta property="article:tag" content="CDN加速">
+<meta property="article:tag" content="HTTPS">
+<meta property="article:tag" content="内网穿透">
+<meta property="article:tag" content="动静分离">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="学习">
+<meta property="article:tag" content="进阶篇">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.ico" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+        
+      
+    
+    <!-- title -->
+    <title>树莓派的新（jiu）玩法-个人博客有意思的玩法</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+    <!-- 百度统计 -->
+    
+      <script src="https://hm.baidu.com/hm.js?1baad79f3aa5081fc9ff11dc24c8a93a"></script>
+    
+    <!-- mathjax -->
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/css/vBanner.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="集合" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+    <div class="content index py4">
+      
+          <header id="header">
+  <a href="/">
+  
+    <div id="title">
+      <h1>集合</h1>
+    </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">首页</a></li>
+       
+        <li><a href="/about/">关于</a></li>
+       
+        <li><a href="/archives/">归档</a></li>
+       
+        <li><a href="/projects_url">项目</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+          
+    <div id="vBanner_Root">
+        <div id="vBanner_Container" style="background-image: linear-gradient(to bottom right, white , #FDC888)">
+            <a target="_blank" rel="noopener" href="https://www.pixiv.net/artworks/88263776">
+                
+                    <div id="vBanner_post" title="艾露露Ailurus" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/88263776_p01.png)"></div>
+                
+            </a>
+            <div id="vLogo_Container">
+                 
+                            
+                        <div id="vBanner_logo" style="background-image:url(https://midou-static-1257227807.cos.ap-chengdu.myqcloud.com/img/%E8%89%BE%E9%9C%B2%E9%9C%B2%EF%BC%88logo%EF%BC%89.png)"></div>
+                    
+                
+            </div>
+        </div>
+    </div>
+
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+
+  <div class="content" itemprop="articleBody">
+      
+          <p>上次我们看过了如何用树莓派搭建wordpress</p>
+<p>这一次我们来玩一点不一样的，弄一点树莓派wordpress的进阶的玩法。  </p>
+<span id="more"></span>
+
+<p>1、配置https，让域名前加一个小锁子</p>
+<p>2、配置动静分离</p>
+<p>3、内网的博客怎么办，内网穿透就行</p>
+<p>4、可以用CDN加速博客的访问</p>
+<p><strong>购买一个专属自己的域名，配置https</strong></p>
+<p>我们的网址怎么是一个IP啊</p>
+<p>很多个人博客的域名都是通过阿里云等域名服务商进行购买的，有很多的域名可以选择，你像我都小博客就是.cn结尾的博客</p>
+<p>因为现在的域名需要备案，所以我这里就不演示域名的购买和备案的过程了。其中ICP备案的流程应该是有2周左右，你需要提交申请书等一系列的操作</p>
+<p>有了域名之后就可以使用HTTPS( Hyper Text Transfer Protocol over SecureSocket Layer)协议了</p>
+<p><strong>何为HTTPs</strong></p>
+<p>其实你可以拆开看，为HTTP + SSL/TLS 目的就是加密你的数据，让你上网访问你的博客更安全。</p>
+<p>加密数据可以让你的数据安全起来，https采用的加密方式是非对称加密和对称加密，分别用在的整个连接的不同的阶段</p>
+<p>https工作流程</p>
+<p>这里面涉及到证书的问题，证书是干什么的。浏览器为了确认就是你发送的https请求，而不是别人发送的，也就是说为了防止报文数据的篡改。</p>
+<p>通过上面的流程也就知道了我们应该申请一个数字证书，而且在服务器进行配置</p>
+<p>如果你是通过域名服务商那里购买的域名，ICP备案完成后就可以直接去域名的仪表板里面下载域名对应的证书，我的是CA机构免费颁发的证书（下面用阿里云来举例子）</p>
+<p>免费的证书一年</p>
+<p>也可以上传自己的证书</p>
+<p>证书都上传完毕了，之后就是在自己的服务器上配置了</p>
+<p><strong>nginx配置https</strong></p>
+<p>https和http的通信的端口是不同的，https是443，http是80</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssl</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">ssl_certificate</span> /path/to/你的证书.pem;</span><br><span class="line"><span class="attribute">ssl_certificate_key</span> /path/to/你的私钥.key;</span><br><span class="line"><span class="attribute">ssl_session_timeout</span> <span class="number">5m</span>;</span><br><span class="line"><span class="attribute">ssl_ciphers</span> ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line"><span class="attribute">ssl_protocols</span> TLSv1 TLSv1.<span class="number">1</span> TLSv1.<span class="number">2</span>;</span><br><span class="line"><span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">on</span>;</span><br></pre></td></tr></table></figure>
+
+<p>通过上图的原理图其实很好理解配置的部分，首先要开启ssl，之后就是配置公钥证书，之后配置服务器的私钥用于解密客户端用公钥加密的会话密钥，会话密钥用来加密C和S直接传输的数据</p>
+<p>之后的配置ssl_session_timeout为会话限制时间、ssl_ciphers为整个流程中对称加密的算法，ssl_protocols为支持的传输层安全协议，之后ssl_prefer_server_ciphers是依赖SSLv3和TLSv1协议的服务器密码将优先于客户端密码</p>
+<p><strong>apache2配置https</strong></p>
+<p>apache2配置就更简单了，默认会有一个ssl配置的文件，只要填好证书和密钥的位置就可以了</p>
+<p>前提是要安装好apache的php模块</p>
+<p>如果用nginx处理全部的https请求就不用配置apache2了，否则会起端口冲突</p>
+<p>配置好之后就是测试下吧</p>
+<p>可以看到浏览器的地址栏如果有锁子的标识就证明连接安全哦</p>
+<p><strong>配置动静分离</strong></p>
+<p>还记得上次我们通过f12的开发者工具看到的资源和整个博客都是来自nginx的吗</p>
+<p>看，又给你看一遍</p>
+<p>我们先来了解下nginx和apache分别适合处理什么文件，什么应用场景</p>
+<p>nginx：既可以在内部直接支持 Rails 和 PHP 程序对外进行服务，也可以支持作为 HTTP<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1">代理服务</a>对外进行服务。Nginx采用C进行编写，不论是系统资源开销还是CPU使用效率都比 Perlbal 要好很多。处理静态文件，索引文件以及自动索引，打开文件描述符缓冲。无缓存的反向代理加速，简单的负载均衡和容错。FastCGI，简单的负载均衡和容错。 （<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/nginx/3817705?fr=aladdin">来自度娘</a>）</p>
+<p>apache： 超稳定， 对PHP支持比较简单， 处理动态请求有优势，nginx在这方面是鸡肋，一般动态请求要apache去做，nginx适合静态和反向。（<a target="_blank" rel="noopener" href="https://blog.csdn.net/lilygg/article/details/87873964">来自CSDN</a>）</p>
+<p>简单的了解了下之后就明白了我们为什么要动静分离了</p>
+<p>具体思路：nginx服务器处理前端的请求，如果是请求的静态文件就可以直接处理，但是如果是动态文件就交予后端的apache2服务器。之后apache2直接通过80端口响应</p>
+<p>我这里是实现动静分离，不是nginx的负载均衡、反向代理</p>
+<p><strong>注意：是两台服务器，不是一台进行配置</strong>。<br><strong>以下的nginx服务器为192.168.0.115</strong><br><strong>这里wireless是115，以太网是192.168.0.118</strong><br><strong>以下的apache2服务器为192.168.0.117</strong></p>
+<p>配置nginx</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> <span class="regexp">~* \.(png|jpg|jpeg|gif|bmp|html|swf|ico|rar|zip|txt|doc|ppt|pdf|xls)$</span> &#123; <span class="attribute">expires</span> <span class="number">1d</span>;  &#125;</span><br><span class="line"><span class="section">location</span> <span class="regexp">~ \.(js.css)$</span> &#123;  <span class="attribute">expires</span> <span class="number">1h</span>; &#125;</span><br><span class="line"><span class="section">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line">                <span class="comment">#proxy_set_header Host $host;</span></span><br><span class="line">                <span class="comment">#proxy_set_header X-Real_IP $remote_addr;</span></span><br><span class="line">                <span class="comment">#proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span></span><br><span class="line">                <span class="attribute">proxy_pass</span> http://ip2yourapacheserver:8080;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置静态文件直接在浏览器缓存中保存的时长，这样就不需要每一次访问博客都请求这些静态的资源文件，因为这些文件是不改变的。</p>
+<p>说明下php的配置部分</p>
+<p><strong>remote_addr</strong><br>是nginx与客户端进行TCP连接过程中，获得的客户端真实地址. Remote Address 无法伪造，因为建立 TCP 连接需要三次握手，如果伪造了源 IP，无法建立 TCP 连接，更不会有后面的 HTTP 请求</p>
+<p><strong>X-Real-IP</strong><br>是一个自定义头。X-Real-Ip 通常被 HTTP 代理用来表示与它产生 TCP 连接的设备 IP，这个设备可能是其他代理，也可能是真正的请求端。需要注意的是，X-Real-Ip 目前并不属于任何标准，代理和 Web 应用之间可以约定用任何自定义头来传递这个信息</p>
+<p><strong>X-Forwarded-For</strong><br>X-Forwarded-For 是一个扩展头。HTTP/1.1（RFC 2616）协议并没有对它的定义，它最开始是由 Squid 这个缓存代理软件引入，用来表示 HTTP 请求端真实 IP，现在已经成为事实上的标准，被各大 HTTP 代理、负载均衡等转发服务广泛使用，并被写入 RFC 7239（Forwarded HTTP Extension）标准之中.</p>
+<p>（<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/15f3498a7fad">作者：大富帅 链接：https://www.jianshu.com/p/15f3498a7fad</a>）</p>
+<p>检查下语法</p>
+<p>ok</p>
+<p><strong>配置apache</strong></p>
+<p>这里我用了另一台服务器，用apache2来解析处理php文件</p>
+<p>注意，因为我的wordpress都是保存在本地的，所以，我就有了nginx服务器的MySQL和apache2服务器的MySQL，这样就有了两个数据库。但是我们只要一个就好，所以我这里想的是做MySQL的主从复制。apache2的MySQL为主服务器，nginx的为从服务器</p>
+<p>但是建议还是用一台云MySQL，这样省事</p>
+<p>首先配置监听端口</p>
+<pre><code>sudo vim /path/to/ports.conf
+</code></pre>
+<p>80改成8080就行，别忘了80端口，因为要通过其响应请求</p>
+<p>因为是给后端8080端口的apache2，所以apache2要监听8080端口</p>
+<p>之后修改virtual server文件</p>
+<pre><code>sudo vim /path/to/apache2/sites-available/000-default.conf
+</code></pre>
+<p>上面的监听端口和下面的文件目录都要改了</p>
+<p>之后测试我遇到了一个问题</p>
+<p>直接返回php文件了，注意这个的nginx服务器的IP和apache的IP都不是最终的</p>
+<p>这是怎么回事呢，原来apache2安装完之后是不带php的模块了</p>
+<p>apt检查下下载的模块</p>
+<p><strong>我的php是7.2所以也要下载7.2的模块哦，千万别错了</strong></p>
+<p>之后我们访问nginx服务器192.168.0.115，当然，访问apache服务器也是可以的。</p>
+<p>访问nginx是301重定向</p>
+<p>我们先看看动态文件</p>
+<p>可以看到处理请求的服务器是apache2</p>
+<p>我们再来看看静态文件</p>
+<p>服务器是nginx文件类型是css</p>
+<p>测试下安装一个主题，我的apache服务器是wireless，导致一直有Too many requests的错误<br>好不容易才安装好了一个主题</p>
+<p>结果换完主题是空白一片，这个主题的css等就没加载出来，我最后还是换一个已经安装的别的主题了</p>
+<p>可以看到没什么问题</p>
+<p>到这里动静分离的部分就完成啦，通过ab测试下和前面单nginx对比下</p>
+<pre><code>ab -n 1000 http://your_server_ip/path/to/your.file
+</code></pre>
+<p><strong>实现动静分离后的RPS</strong></p>
+<p>是17.30</p>
+<p><strong>没有实现动静分离的RPS</strong></p>
+<p>呦，有点差</p>
+<p>通过上面的测试也可以看到动静分离，让软件干擅长的事情是多么的重要了吧</p>
+<p><strong>内网穿透这点事</strong></p>
+<p>内网穿透的部分</p>
+<p>首先来说一下内网穿透，NAT穿透。NAT网络地址转换，简单大体来讲就是将一个公网的IP对应（映射）一个内网的IP</p>
+<p>内网穿透的种类也有很多，最常用的就是端口映射NAPT。将公网IP的一个端口对应内网的一个IP</p>
+<p>内网穿透的工具很多，花生壳，向日癸，ngrok第一代，和frp等</p>
+<p>ngrok第一代是开源的，第二代作者商用就闭源了。frp和ngrok差不多，如果是个人的网站使用谁都可以。如果访问量大则建议frp</p>
+<p>几款穿透工具对比</p>
+<p>ngrok的原理简单来讲是反向代理，ngrok服务器和后端请求的服务器透明之后和客户端建立一个隧道</p>
+<p>很明确的一张原理图</p>
+<p>还有一个好处就是可以让后端的服务器对于客户端不可见，客户端见到的只是ngrok服务器</p>
+<p>ngrok如果要自己搭建ngrok服务器就需要一台公网的服务器，但是大家大多数都没有（要不然要什么内网穿透建站呢，直接在公网服务器上搭建不就行了！）</p>
+<p>这里我推荐一个<a target="_blank" rel="noopener" href="http://ngrok.ciqiuwl.cn/">小米球</a></p>
+<p>里面有详细的下载ngrok客户端的步骤，以及如何使用的详细步骤</p>
+<p><strong>Ngrok1.7：</strong></p>
+<p>这里推荐国内的<a target="_blank" rel="noopener" href="https://manager.xiaomiqiu.com/">小米球Ngrok服务</a>，是国人搭建的</p>
+<p>右下角下载响应的客户端</p>
+<p>下载好之后上传到树莓派</p>
+<p>这里我的站点的URL填写的是frp.xiaoblogs.cn，但是没有设置这个域名的解析，导致站点的资源文件后台登录都用不了了。这里我用的是一个简单的方法。</p>
+<p>首先在树莓派的/etc/hosts文件里面添加一个记录，让我的这个域名指向本机</p>
+<p>之后重启网卡或者reboot使生效</p>
+<p>之后ping一下域名看是不是解析到本机了</p>
+<p>嗯~ o(<em>￣▽￣</em>)o</p>
+<p>之后就可以进入wordpress的控制面板更改URL了</p>
+<p>URL就改成映射的ngrok服务器给你提供的url吧</p>
+<p>对了，我们还没讲配置ngork呢</p>
+<p>ngrok照frp的配置要简单多了，可能也是我前面的时候一直用的是ngrok</p>
+<p>auth_token是在注册系统中给你的，在小米球Ngrok管理系统中能找到</p>
+<p>tunnels能里面的所有隧道都可以自己指定名称eg.httptun</p>
+<p>远程端口remote_port不要更改，Proto里面的本地端口改成自己的http服务端口</p>
+<p>subdomain子域名自己随机设定，别设定成和别人一样的就行</p>
+<p>配置好就启动吧</p>
+<p>首先先启动ngork吧，看一看给你分配的url</p>
+<pre><code>sudo ./ngrok -config ./ngrok.conf start httptun
+</code></pre>
+<p>通过pi.ngrok2.xiaomiqiu.cn访问本地的80服务</p>
+<p>之后就可以更改wordpress的站点URL了</p>
+<p>之后就试一试通过这个域名访问吧</p>
+<p>后台返回200了</p>
+<p>可以看到已经成功的实现内网穿透了</p>
+<p><a target="_blank" rel="noopener" href="https://diannaobos.com/frp/">frp官网</a></p>
+<p>如果你有nas是freeBSD也可以用frp内网穿透，有freeBSD的版本</p>
+<p>这里我说明下，因为要付费才能用别人的公网的frps服务器来提供服务，我就用自己的阿里云了</p>
+<p><strong>公网服务器（如果你没有公网服务器就使用别人的，这一步就可以忽略了）:</strong></p>
+<p>公网服务器要用到两个文件，frps.ini和frps的sh文件，一个是frps的配置文件，一个是启动脚本</p>
+<p>首先来配置下，因为我要实现的是80端口的穿透</p>
+<p>官方的完整配置文件里有详细的说明（这里只是一部分）</p>
+<p>设置建立隧道的端口8085，让服务器监听80端口，映射本地的nginx服务器的80端口</p>
+<p>别忘记了要在防火墙设置中开放两个端口</p>
+<p>阿里云的控制台设置的</p>
+<p>之后启动，可以用nohup &amp;做后台启动</p>
+<pre><code>/path/to/frps -c /path/to/frps.ini
+</code></pre>
+<p>成功开启</p>
+<p>成功开启</p>
+<p><strong>本地apache服务器的frpc设置</strong>：</p>
+<p>common部分填写公网服务器IP和远程的端口，用来建立隧道，以及验证的token<br>下面部分填写本地的IP和端口和远程用于映射的端口</p>
+<p>之后启动客户端</p>
+<pre><code>/path/to/frpc -c /path/to/frpc.ini
+</code></pre>
+<p>无论是客户端还是服务端都可以添加日志</p>
+<p>可以看到log里面说明登录服务器成功</p>
+<p>服务端已经看到了有一个客户端和自己建立了一个连接</p>
+<p>之后就是测试了</p>
+<p>访问我们自定义的域名，<strong>别忘记了域名要备案并且要到DNS服务器添加A记录或者CNAME记录</strong></p>
+<p>成功的访问到了我们的内网的博客</p>
+<p>资源文件也可访问到</p>
+<p>这里给大家说一个tips</p>
+<p>在安装wordpress要你填写主站IP</p>
+<p>那个IP就是wordpress所有资源请求的入口</p>
+<p>我碰到了什么问题呢，内网穿透完。可以通过自定义域名访问到主站的index.php但是却访问不到资源文件，而且设计到的提交表单等服务也不行</p>
+<p>问题就在wordpress设置里主站IP的设置</p>
+<p><strong>设置在这里，如果你是内网穿透的话，要把这里改成你的代理服务器IP或者自定义的域名</strong></p>
+<p>frp后台可以看到建立了一个连接</p>
+<p>当然也可以使用frp提供的dashboard仪表板查看自己的代理</p>
+<p>基本上想看的内容都有</p>
+<p>基本的内网穿透就完成了，还是很轻松的。</p>
+<p><strong>用CDN加速博客访问</strong></p>
+<p>下面开始最后的1/4之前，要有台公网的服务器和备案的域名。我就用第三方的CDN又拍云来做例子了，用自己的博客来实现加速</p>
+<p>首先，又拍云是按流量来收钱的。所以大家用的时候要注意哦</p>
+<p>价格还好吧</p>
+<p>CDN有很多项服务，我使用的仅是域名管理，回源控制，和HTTPS</p>
+<p>添加好自己的域名</p>
+<p>之后要在DNS解析中添加CNAME</p>
+<p>帮助说明的很清楚</p>
+<p>添加一个DNS解析</p>
+<p>回源管理，设置资源文件站</p>
+<p>HTTPS设置</p>
+<p>基本的设置在又拍云的官方文档有详细的说明，我就不赘述了</p>
+<p>之后就是ab测试环节了</p>
+<p>没开启cdn</p>
+<p>开启cdn</p>
+<p>开启cdn之后提示他的CNAME域名没有备案。。。真实无语了</p>
+<p>阿里云也有CDN的服务，文档都超级详细，需要的小伙伴就去跟着步骤走吧。</p>
+<p>我这里只是提供一个CDN加速博客的思路</p>
+<p><strong>总结</strong></p>
+<p>这一次的进阶篇完成了4部分的内容，都是对自己的站点进行了优化的工作。当然我这里还有没涉及到的站长必做的SEO。基本到这里，涉及到的知识就很多了，各位同学好友们就多加努力吧，做好一个站长不容易，要长久的学习！才能成为好站长！</p>
+
+        
+  </div>
+</article>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2021-2023
+    米豆
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+ 
+    <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" crossorigin="anonymous"></script> 
+  
+
+  <script type="text/javascript">
+      new Valine({
+        el: '#vcomments',
+        appId: '16RIoAUdMwdJKhah8eqwpG8e-gzGzoHsz',
+        appKey: 'rjY2FM4qe5PGNokVnDjN7TVk',
+
+        emojiCDN: '//static.xiaoblogs.cn/emoji/',
+        emojiMaps: {
+          '七海_哭哭': '七海_哭哭.png', 
+          '七海_害怕': '七海_害怕.png',
+          '七海_尴尬': '七海_尴尬.png',
+          '七海_惊讶': '七海_惊讶.png',
+          '七海_捏捏': '七海_捏捏.png', 
+          '七海_柠檬': '七海_柠檬.png', 
+          '七海_比心': '七海_比心.png', 
+          '七海_沉了': '七海_沉了.png', 
+          '七海_生闷气': '七海_生闷气.png',
+          '七海_贴贴': '七海_贴贴.png',
+          '七濑胡桃_乖巧': '七濑胡桃_乖巧.png', 
+          '七濑胡桃_元气满满': '七濑胡桃_元气满满.png',
+          '七濑胡桃_吧唧吧唧': '七濑胡桃_吧唧吧唧.png',
+          '七濑胡桃_噗': '七濑胡桃_噗.png', 
+          '七濑胡桃_好饿': '七濑胡桃_好饿.png',
+          '七濑胡桃_委屈': '七濑胡桃_委屈.png', 
+          '七濑胡桃_宅在家': '七濑胡桃_宅在家.png',
+          '七濑胡桃_我来了！': '七濑胡桃_我来了！.png',
+          '七濑胡桃_我超可爱': '七濑胡桃_我超可爱.png', 
+          '七濑胡桃_有意思': '七濑胡桃_有意思.png',
+          '七濑胡桃_泪目': '七濑胡桃_泪目.png', 
+          '七濑胡桃_熬夜': '七濑胡桃_熬夜.png',
+          '七濑胡桃_生气': '七濑胡桃_生气.png', 
+          '七濑胡桃_紧张': '七濑胡桃_紧张.png',
+          '七濑胡桃_缜密分析': '七濑胡桃_缜密分析.png', 
+          '中国绊爱2nd_AWSL': '中国绊爱2nd_AWSL.png', 
+          '中国绊爱2nd_GKD': '中国绊爱2nd_GKD.png', 
+          '中国绊爱2nd_YYDS': '中国绊爱2nd_YYDS.png', 
+          '中国绊爱2nd_不': '中国绊爱2nd_不.png', 
+          '中国绊爱2nd_哭了': '中国绊爱2nd_哭了.png',
+          '中国绊爱2nd_啊这': '中国绊爱2nd_啊这.png', 
+          '中国绊爱2nd_嘿嘿嘿': '中国绊爱2nd_嘿嘿嘿.png',
+          '中国绊爱2nd_噗': '中国绊爱2nd_噗.png', 
+          '中国绊爱2nd_地铁看手机': '中国绊爱2nd_地铁看手机.png', 
+          '中国绊爱2nd_太菜太下饭': '中国绊爱2nd_太菜太下饭.png', 
+          '中国绊爱2nd_夺笋啊': '中国绊爱2nd_夺笋啊.png', 
+          '中国绊爱2nd_害怕': '中国绊爱2nd_害怕.png', 
+          '中国绊爱2nd_快逃': '中国绊爱2nd_快逃.png', 
+          '中国绊爱2nd_我觉得OK': '中国绊爱2nd_我觉得OK.png', 
+          '中国绊爱2nd_握草': '中国绊爱2nd_握草.png', 
+          '中国绊爱2nd_有排面': '中国绊爱2nd_有排面.png', 
+          '中国绊爱2nd_狗头': '中国绊爱2nd_狗头.png', 
+          '中国绊爱2nd_生气气': '中国绊爱2nd_生气气.png', 
+          '中国绊爱2nd_知识增加了': '中国绊爱2nd_知识增加了.png', 
+          '中国绊爱2nd_芜湖': '中国绊爱2nd_芜湖.png', 
+          '嘉然_biu': '嘉然_biu.png', 
+          '嘉然_mua': '嘉然_mua.png', 
+          '嘉然_一眼真': '嘉然_一眼真.png', 
+          '嘉然_一米八': '嘉然_一米八.png', 
+          '嘉然_你好': '嘉然_你好.png', 
+          '嘉然_剪刀手': '嘉然_剪刀手.png', 
+          '嘉然_吓人': '嘉然_吓人.png', 
+          '嘉然_嘉人们': '嘉然_嘉人们.png', 
+          '嘉然_嘉油': '嘉然_嘉油.png', 
+          '嘉然_嘉速心动': '嘉然_嘉速心动.png', 
+          '嘉然_安详': '嘉然_安详.png', 
+          '嘉然_敲打': '嘉然_敲打.png', 
+          '嘉然_暗中观察': '嘉然_暗中观察.png', 
+          '嘉然_流口水': '嘉然_流口水.png', 
+          '嘉然_点赞': '嘉然_点赞.png', 
+          '嘉然_略略略': '嘉然_略略略.png', 
+          '嘉然_番茄炒蛋拳': '嘉然_番茄炒蛋拳.png', 
+          '嘉然_笔芯': '嘉然_笔芯.png', 
+          '嘉然_绷不住了': '嘉然_绷不住了.png', 
+          '嘉然_锤头丧气': '嘉然_锤头丧气.png', 
+          '小希小桃_ai有力量': '小希小桃_ai有力量.png', 
+          '小希小桃_mua': '小希小桃_mua.png', 
+          '小希小桃_变成河豚': '小希小桃_变成河豚.png', 
+          '小希小桃_呆丝ki': '小希小桃_呆丝ki.png', 
+          '小希小桃_土土土': '小希小桃_土土土.png', 
+          '小希小桃_委屈': '小希小桃_委屈.png', 
+          '小希小桃_孜然一身': '小希小桃_孜然一身.png', 
+          '小希小桃_对不起': '小希小桃_对不起.png', 
+          '小希小桃_得意': '小希小桃_得意.png', 
+          '小希小桃_想peach': '小希小桃_想peach.png', 
+          '小希小桃_桃桃我悟了': '小希小桃_桃桃我悟了.png', 
+          '小希小桃_比心': '小希小桃_比心.png', 
+          '小希小桃_给你一斧': '小希小桃_给你一斧.png', 
+          '小希小桃_绝望': '小希小桃_绝望.png', 
+          '小希小桃_茶茶': '小希小桃_茶茶.png', 
+          '小希小桃_蚌埠住了': '小希小桃_蚌埠住了.png', 
+          '小希小桃_被气晕': '小希小桃_被气晕.png', 
+          '小希小桃_这样那样': '小希小桃_这样那样.png', 
+          '小希小桃_震惊': '小希小桃_震惊.png', 
+          '小希小桃_？？？': '小希小桃_？？？.png', 
+          '泠鸢yousa_awsl': '泠鸢yousa_awsl.png', 
+          '泠鸢yousa_加大力度': '泠鸢yousa_加大力度.png', 
+          '泠鸢yousa_大哭': '泠鸢yousa_大哭.png', 
+          '泠鸢yousa_头晕': '泠鸢yousa_头晕.png', 
+          '泠鸢yousa_好人卡': '泠鸢yousa_好人卡.png', 
+          '泠鸢yousa_干杯': '泠鸢yousa_干杯.png', 
+          '泠鸢yousa_惊讶': '泠鸢yousa_惊讶.png', 
+          '泠鸢yousa_打call': '泠鸢yousa_打call.png', 
+          '泠鸢yousa_沉默': '泠鸢yousa_沉默.png', 
+          '泠鸢yousa_滑稽': '泠鸢yousa_滑稽.png', 
+          '泠鸢yousa_生气': '泠鸢yousa_生气.png', 
+          '泠鸢yousa_真棒': '泠鸢yousa_真棒.png', 
+          '泠鸢yousa_请吃桃': '泠鸢yousa_请吃桃.png', 
+          '泠鸢yousa_贴贴': '泠鸢yousa_贴贴.png', 
+          '泠鸢yousa_问号': '泠鸢yousa_问号.png', 
+          '白神遥_5835': '白神遥_5835.png', 
+          '白神遥_kusa': '白神遥_kusa.png', 
+          '白神遥_加油': '白神遥_加油.png', 
+          '白神遥_吃惊': '白神遥_吃惊.png', 
+          '白神遥_吃桃子': '白神遥_吃桃子.png', 
+          '白神遥_吃瓜': '白神遥_吃瓜.png', 
+          '白神遥_呆呆': '白神遥_呆呆.png', 
+          '白神遥_哭哭': '白神遥_哭哭.png', 
+          '白神遥_好耶': '白神遥_好耶.png', 
+          '白神遥_晚安': '白神遥_晚安.png', 
+          '白神遥_柠檬': '白神遥_柠檬.png', 
+          '白神遥_滑稽': '白神遥_滑稽.png', 
+          '白神遥_点赞': '白神遥_点赞.png', 
+          '白神遥_让我康康': '白神遥_让我康康.png', 
+          '白神遥_豹怒': '白神遥_豹怒.png', 
+          '白神遥_豹笑': '白神遥_豹笑.png', 
+          '白神遥_跳脸': '白神遥_跳脸.png', 
+          '白神遥_问号': '白神遥_问号.png', 
+          '白神遥_阿巴阿巴': '白神遥_阿巴阿巴.png', 
+          '白神遥_骄傲': '白神遥_骄傲.png', 
+          '阿梓_不怕困难': '阿梓_不怕困难.png', 
+          '阿梓_别走好吗': '阿梓_别走好吗.png', 
+          '阿梓_可爱捏': '阿梓_可爱捏.png', 
+          '阿梓_吹溜溜笛': '阿梓_吹溜溜笛.png', 
+          '阿梓_咋回事捏': '阿梓_咋回事捏.png', 
+          '阿梓_哭哭': '阿梓_哭哭.png', 
+          '阿梓_大家好呀': '阿梓_大家好呀.png', 
+          '阿梓_太破费了': '阿梓_太破费了.png', 
+          '阿梓_安静一下': '阿梓_安静一下.png', 
+          '阿梓_就这？': '阿梓_就这？.png', 
+          '阿梓_忍者修行': '阿梓_忍者修行.png', 
+          '阿梓_恰饱饱': '阿梓_恰饱饱.png', 
+          '阿梓_我是楞啊': '阿梓_我是楞啊.png', 
+          '阿梓_我晒吗': '阿梓_我晒吗.png', 
+          '阿梓_拳头硬了': '阿梓_拳头硬了.png', 
+          '阿梓_拿个快递': '阿梓_拿个快递.png', 
+          '阿梓_歪歪歪': '阿梓_歪歪歪.png', 
+          '阿梓_真接受不了': '阿梓_真接受不了.png', 
+          '阿梓_真牛蛙': '阿梓_真牛蛙.png', 
+          '阿梓_谢谢你呀': '阿梓_谢谢你呀.png'
+      }
+    })
+  </script>
+
+</body>
+</html>

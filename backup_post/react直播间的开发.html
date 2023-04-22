@@ -6,18 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="学习 生活 感想">
+    <meta name="description" content="直播-流媒体。整个项目是19年4-5月份完成的，20年2月疫情期间做了新ui。最近这几天加了SuperChat功能    在线Demo">
 <meta property="og:type" content="website">
-<meta property="og:title" content="friends">
-<meta property="og:url" content="https://mimonarchrd.gitee.io/friends/index.html">
+<meta property="og:title" content="React直播间的开发">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/backup_post/react%E7%9B%B4%E6%92%AD%E9%97%B4%E7%9A%84%E5%BC%80%E5%8F%91.html">
 <meta property="og:site_name" content="集合">
-<meta property="og:description" content="学习 生活 感想">
+<meta property="og:description" content="直播-流媒体。整个项目是19年4-5月份完成的，20年2月疫情期间做了新ui。最近这几天加了SuperChat功能    在线Demo">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-01T02:59:16.000Z">
-<meta property="article:modified_time" content="2021-08-17T23:28:34.000Z">
+<meta property="og:image" content="https://static.xiaoblogs.cn/img/liveroomv1.png">
+<meta property="og:image" content="https://static.xiaoblogs.cn/img/liveroomv2.png">
+<meta property="og:image" content="https://static.xiaoblogs.cn/img/liveroomv3.png">
+<meta property="article:published_time" content="2021-11-21T04:22:39.000Z">
+<meta property="article:modified_time" content="2022-04-30T03:15:12.925Z">
 <meta property="article:author" content="[object Object]">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.xiaoblogs.cn/img/liveroomv1.png">
     
     
       
@@ -37,7 +41,7 @@
       
     
     <!-- title -->
-    <title>friends</title>
+    <title>React直播间的开发</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -111,7 +115,49 @@
 
   <div class="content" itemprop="articleBody">
       
-          
+          <p>直播-流媒体。整个项目是19年4-5月份完成的，20年2月疫情期间做了新ui。最近这几天加了SuperChat功能</p>
+<ul>
+<li>  <a href="https://mimonarchrd.gitee.io/liveroom" title="在线Demo">在线Demo</a><span id="more"></span>
+这算是自己兴趣使然的第一个项目。17年写过一点小程序，但是那会儿对于前端的知识掌握的太少，直接用腾讯的框架很多东西都不懂的</li>
+</ul>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ul>
+<li>  最早了解的直播是red5，red5可以直接搭建一个直播服务器，但是版本都很老了，后面的版本不开源。rtmp和hls，rtmp是常用的流协议，但不支持手机播放。因此，选择了nginx-rtmp-module模块，这个模块接收rtmp推流，推流可以选择使用obs或者ffmpeg。这个模块还提供对应的应用，比如hls支持，dash支持。可以将rtmp流变为hls，hls是通过http协议来拿到ts流切片的，现在的H5播放器（videojs）等一些封装好的播放器都支持。videojs拿到m3u8文件可以自动找到服务器或者客户端拿到的ts文件，非常的方便。且对于手机和PC都有很好的支持。</li>
+<li>直播间=互动+直播视频，最基本的两个功能。额外还有在线人数统计，还有醒目留言SC功能。20年更新的版本还可以换直播间的推流源，在线更改直播间标题和待机背景<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2>  基本的思路明确后，服务器的nginx安装和安装nginx-rtmp-module模块都不是什么问题。</li>
+<li>  <a target="_blank" rel="noopener" href="https://github.com/arut/nginx-rtmp-module" title="nginx-rtmp-module">nginx-rtmp-module下载</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">path/to/nginx/configuer --add-module=/path/to/nginx-rtmp-module   // 编译安装</span><br><span class="line">make</span><br><span class="line">install</span><br></pre></td></tr></table></figure>
+
+<p>nginx的配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rtmp&#123;                                   <span class="comment"># 添加一个rtmp块</span></span><br><span class="line">    server&#123;                             <span class="comment"># rtmp推流端口</span></span><br><span class="line">        listen 1935;</span><br><span class="line">        chunk_size 4000;</span><br><span class="line">    application hls&#123;                    <span class="comment"># hls应用块</span></span><br><span class="line">        hls on;</span><br><span class="line">        hls_path /path/to/hls/abcd;     <span class="comment"># hls的文件存放位置</span></span><br><span class="line">        live on;</span><br><span class="line">        record off;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="直播间结构"><a href="#直播间结构" class="headerlink" title="直播间结构"></a>直播间结构</h2><ul>
+<li>  播放器组件</li>
+<li>  标题组件</li>
+<li>  聊天内容组件</li>
+<li>  发送聊天组件</li>
+<li>  服务器通讯组件</li>
+<li>  在线人数显示组件</li>
+</ul>
+<p>简单说为上面这些组件构成，但一些组件下又追加了一些其他组件。这里不给出了</p>
+<h2 id="遇到的一些问题"><a href="#遇到的一些问题" class="headerlink" title="遇到的一些问题"></a>遇到的一些问题</h2><h4 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h4><p>当时使用bootstrap3作为布局框架，栅格布局。现在来看，这种布局方式不灵活，调整布局需要到html文件下。理论上应该是在组件中调整布局的方式，以App组件来加载其他组件最后挂载App组件到html的一个定义好的dom上去。调整布局仅调整App组件即可</p>
+<h4 id="实时聊天"><a href="#实时聊天" class="headerlink" title="实时聊天"></a>实时聊天</h4><p>多人同时聊天需要一份共享的聊天数据，或者说有新聊天内容都要同步给所有参与聊天的人。这里使用了socketio，做了长连接。会话时间为进入直播间到关掉直播间页面。整个聊天数据都是在服务端处理的，比如新消息的下发，在线人数等</p>
+<h4 id="冗余数据处理"><a href="#冗余数据处理" class="headerlink" title="冗余数据处理"></a>冗余数据处理</h4><p>这一块在现在的项目中还没有优化，下发新的聊天数据应该是最新的一条数据。现在是下发给每一个连接的客户端所有的数据，之后react会做虚拟dom的对比仅更新最新一条的dom</p>
+<h4 id="推流源换源、换海报、配置直播标题"><a href="#推流源换源、换海报、配置直播标题" class="headerlink" title="推流源换源、换海报、配置直播标题"></a>推流源换源、换海报、配置直播标题</h4><p>因为这些配置一般为直播up配置，但直播间没有权限划分、用户认证。故想到了使用路由开发隐藏页面（不直接提供入口）也就是README中提到的<code>/backstage</code>后台</p>
+<h4 id="hls延迟"><a href="#hls延迟" class="headerlink" title="hls延迟"></a>hls延迟</h4><p>hls是因为原理为加载切片，不为完整流有延迟。这点只能二次开发videojs或者使用其他协议，暂时没有计划</p>
+<h2 id="直播间的历程（同步README）"><a href="#直播间的历程（同步README）" class="headerlink" title="直播间的历程（同步README）"></a>直播间的历程（同步README）</h2><h3 id="直播间1-0"><a href="#直播间1-0" class="headerlink" title="直播间1.0"></a>直播间1.0</h3><blockquote>
+<p>当时正是Ultra2019的时候，为了给无法看Y2B的小伙伴云蹦迪的乐趣，想到了直播。不能用其他平台直播境外的东西，所以就自己用Red5和videojs5.x的版本弄了一个简易的网页。</p>
+</blockquote>
+<p><img src="https://static.xiaoblogs.cn/img/liveroomv1.png"></p>
+<h3 id="直播间2-0"><a href="#直播间2-0" class="headerlink" title="直播间2.0"></a>直播间2.0</h3><blockquote>
+<p>直播间1.0的最大问题就是rtmp推流只能用flash播放，手机不支持，没法在手机上看。之后正巧学习了React框架就索性用了这个框架。播放器啊、聊天框啊都是用的<a target="_blank" rel="noopener" href="https://ant.design/docs/react/introduce-cn">Ant Design</a>第三方的UI组件库。播放器是<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/react-flow-player">FlowPlayer</a>是H5的播放器，也就用HLS推流了。之后就一直没有了更新。直到2020年的这个多灾多难的假期，有了时间准备更新下直播间。受不了2.0的圆角设计和UI了，索性发布3.0</p>
+</blockquote>
+<p><img src="https://static.xiaoblogs.cn/img/liveroomv2.png"></p>
+<h3 id="直播间3-0"><a href="#直播间3-0" class="headerlink" title="直播间3.0"></a>直播间3.0</h3><blockquote>
+<p>直播间3.0全新设计了UI，我使用的是Balsamiq Wireframes 4，在liveroom_design的文件夹里面有设计样式图片。本来打算是重新重做直播间，其实说到也算是。参考设计是Y2B。做完了UI并且实现了逻辑后发现直播间的标题和播放器海报，直播源不能更改。后面又想到了用前端的另一个页面直接可以对这些元素修改。到最后终于做完啦，开始直播喽！</p>
+</blockquote>
+<p><img src="https://static.xiaoblogs.cn/img/liveroomv3.png"></p>
+<h2 id="一点点感想"><a href="#一点点感想" class="headerlink" title="一点点感想"></a>一点点感想</h2><p>其实花的时间不久，多数的时间不是在编码，而是在解决遇到的问题。或者是权衡用什么方式实现最好。还有的时间在研究react，尤其是第二版的直播间，完全是边学边做。其实还有好多的功能没有添加，比如弹幕。最大的感触倒不是编码多牛了，而是比如以前太单纯考虑问题；弹幕仅考虑发送和显示，现在在此基础上考虑弹幕的显示是按照直播时间来显示，什么时候进来就从什么时候开始，显示以此时间开始后的弹幕。弹幕的记忆功能。考虑问题更多了罢。知识是学不完的，多练多尝试多学习。</p>
+
         
   </div>
 </article>

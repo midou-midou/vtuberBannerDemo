@@ -6,18 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="学习 生活 感想">
+    <meta name="description" content="为了拓展博客的小组件，且边看博客边听歌。完成了一个网易云音乐小组件 在侧边栏可以看到 完成这个组件有两点    获取数据   使用获取的数据  获取数据使用的fetch，异步。因为hexo渲染页面在渲染post之前，所以不能将获取数据放到挂载的钩子下。因此只能异步获取数据并写入到一个json文件，使用的时候直接同步读取这个json文件 使用数据则为dom的相关操作。 网易云的资源会禁止同一个IP">
 <meta property="og:type" content="website">
-<meta property="og:title" content="friends">
-<meta property="og:url" content="https://mimonarchrd.gitee.io/friends/index.html">
+<meta property="og:title" content="ncm网易云小插件发布">
+<meta property="og:url" content="https://mimonarchrd.gitee.io/backup_post/ncm%E7%BD%91%E6%98%93%E4%BA%91%E5%B0%8F%E6%8F%92%E4%BB%B6%E5%8F%91%E5%B8%83.html">
 <meta property="og:site_name" content="集合">
-<meta property="og:description" content="学习 生活 感想">
+<meta property="og:description" content="为了拓展博客的小组件，且边看博客边听歌。完成了一个网易云音乐小组件 在侧边栏可以看到 完成这个组件有两点    获取数据   使用获取的数据  获取数据使用的fetch，异步。因为hexo渲染页面在渲染post之前，所以不能将获取数据放到挂载的钩子下。因此只能异步获取数据并写入到一个json文件，使用的时候直接同步读取这个json文件 使用数据则为dom的相关操作。 网易云的资源会禁止同一个IP">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-01T02:59:16.000Z">
-<meta property="article:modified_time" content="2021-08-17T23:28:34.000Z">
+<meta property="og:image" content="https://img.shields.io/npm/v/hexo-ncm-widget?style=flat-square">
+<meta property="article:published_time" content="2021-11-20T01:22:58.000Z">
+<meta property="article:modified_time" content="2022-04-30T03:15:12.927Z">
 <meta property="article:author" content="[object Object]">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.shields.io/npm/v/hexo-ncm-widget?style=flat-square">
     
     
       
@@ -37,7 +39,7 @@
       
     
     <!-- title -->
-    <title>friends</title>
+    <title>ncm网易云小插件发布</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -111,7 +113,18 @@
 
   <div class="content" itemprop="articleBody">
       
-          
+          <p><img src="https://img.shields.io/npm/v/hexo-ncm-widget?style=flat-square" alt="npm"></p>
+<p>为了拓展博客的小组件，且边看博客边听歌。完成了一个网易云音乐小组件</p>
+<p>在侧边栏可以看到</p>
+<p>完成这个组件有两点</p>
+<ul>
+<li>  获取数据</li>
+<li>  使用获取的数据</li>
+</ul>
+<p>获取数据使用的fetch，异步。因为hexo渲染页面在渲染post之前，所以不能将获取数据放到挂载的钩子下。因此只能异步获取数据并写入到一个json文件，使用的时候直接同步读取这个json文件</p>
+<p>使用数据则为dom的相关操作。</p>
+<p>网易云的资源会禁止同一个IP多次的访问，因此资源的地址也不断的变化。只能多使用<code>hexo g</code>来更新资源地址了</p>
+
         
   </div>
 </article>
